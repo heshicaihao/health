@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                  http://www.springframework.org/schema/beans/spring-beans.xsd
+                  http://www.springframework.org/schema/context
+                  http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--开启注解配置支持 否则@Autowired注解注入jedisPool 会空指针异常-->
+    <context:component-scan base-package="com.itheima.job"/>
+
+    <!--注册到spring容器中-->
+    <bean id="clearImg" class="com.itheima.job.ClearImg"/>
+
+    <!--创建jobDeatil对象，负责通过反射调用任务方法-->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!--注入目标对象-->
+        <property name="targetObject" ref="clearImg"/>
+        <!--注入目标方法-->
+        <property name="targetMethod" value="deleteQiNiuImg"/>
+    </bean>
+    <!--创建触发器 触发时间配置  （只能对应一个任务）-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <!--配置触发时间-->
+        <property name="cronExpression">
+            <!--cron表达式 每隔5秒运行一次任务
+            0 0 2 * * ?  凌晨2点运行任务
+            -->
+            <value>0/5 * * * * ?</value>
+        </property>
+    </bean>
+
+    <!--统一调度的框架  可以配置多个触发器（相当于对应多个任务）-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--可以注入多个触发器-->
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <!--quartz调用框架==>触发器==>任务详情JobDetail==>任务==>执行具体的业务 -->
+
+
+
+</beans>
