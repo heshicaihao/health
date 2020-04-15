@@ -1,13 +1,12 @@
 package com.itheima.utils;
 
-
-
-
+/**
+ * @author ljw
+ * @Date: 2020/4/15 20:03
+ */
 public class Test {
-
-    public static void main(String[] args) {
-        System.out.println("my name is zhang qing tian");
-        System.out.println("test push");
-
+    @org.junit.Test
+    public void  test() {
+        System.out.println("来了,老铁!");
     }
 }
