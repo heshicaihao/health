@@ -176,6 +176,7 @@
         <dependency>
             <groupId>com.alpha</groupId>
             <artifactId>itextasian</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <!--pdf-->
         <dependency>
