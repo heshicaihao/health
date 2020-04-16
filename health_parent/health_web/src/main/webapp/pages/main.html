@@ -230,7 +230,7 @@
         },
         methods:{
             getUser:function () {
-                axios.get("/user/getUserInfo.do").then(res=> {
+                axios.get("/user/getUsername.do").then(res=> {
                     this.username = res.data.data;
                     // if (res.data.flag) {
                     //     this.username = res.data.date;
