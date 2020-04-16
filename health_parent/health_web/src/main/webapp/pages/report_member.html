@@ -9,38 +9,136 @@
         <meta name="keywords" content="传智健康">
         <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
         <!-- 引入样式 -->
+
         <link rel="stylesheet" href="../css/style.css">
         <script src="../js/echarts.js"></script>
+        <style>
+            .el-header, .el-footer {
+                background-color: #B3C0D1;
+                color: #333;
+                text-align: center;
+                line-height: 60px;
+            }
+
+            .el-aside {
+                background-color: #D3DCE6;
+                color: #333;
+                text-align: center;
+                line-height: 200px;
+            }
+
+            .el-main {
+                background-color: #E9EEF3;
+                color: #333;
+                text-align: center;
+                line-height: 160px;
+            }
+
+            body > .el-container {
+                margin-bottom: 20px;
+            }
+
+            .el-container:nth-child(5) .el-aside,
+            .el-container:nth-child(6) .el-aside {
+                line-height: 260px;
+            }
+
+            .el-container:nth-child(7) .el-aside {
+                line-height: 320px;
+            }
+        </style>
     </head>
     <body class="hold-transition">
         <div id="app">
             <div class="content-header">
                 <h1>统计分析<small>会员数量</small></h1>
-                <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>统计分析</el-breadcrumb-item>
-                    <el-breadcrumb-item>会员数量</el-breadcrumb-item>
-                </el-breadcrumb>
+
+
+                <!--日期选择-->
+
+
             </div>
-            <div class="app-container">
-                <div class="box">
-                    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                    <div id="chart1" style="height:600px;"></div>
-                </div>
+            <div class="block" style="margin-left:7em">
+                <!--提示用户的标签-->
+                <el-tag size="medium" type="success">自定义检索时间</el-tag>
+
+                <el-date-picker
+                        v-model="value1"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        format="yyyy 年 MM 月 dd 日"
+                        unlink-panels="false"
+                        value-format="yyyy-MM-dd">
+                    end-placeholder="结束日期">
+                </el-date-picker>
+                <el-button type="primary" size="medium" @click="show()" icon="el-icon-search" plain>搜索</el-button>
+
             </div>
+            <!--<div class="app-container">-->
+
+            <!--</div>-->
+            <el-container>
+                        <div class="box">
+                            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                            <div id="chart1" style="height:500px;"></div>
+                        </div>
+
+                        <div class="Rbox">
+                            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                            <div id="chart2" style="height:500px;"></div>
+                        </div>
+                        <div class="Rbox">
+                            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                            <div id="chart3" style="height:500px;"></div>
+                        </div>
+            </el-container>
+
+
         </div>
     </body>
     <!-- 引入组件库 -->
     <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
     <script type="text/javascript">
+
+        new Vue({
+            el:"#app",
+            data:{
+                value1: '',
+
+            },
+
+            methods:{
+                show:function () {
+
+                    axios.post("/report/getMemberCountBetweenDates.do",this.value1).then(res=>{
+
+
+                    });
+                }
+            }
+
+
+        });
+
+
         // 基于准备好的dom，初始化echarts实例
         var myChart1 = echarts.init(document.getElementById('chart1'));
+        var myChart2 = echarts.init(document.getElementById('chart2'));
+        var myChart3 = echarts.init(document.getElementById('chart3'));
 
         // 使用刚指定的配置项和数据显示图表。
         //myChart.setOption(option);
-
-        axios.get("/report/getMemberReport.do").then((res)=>{
+        // 显示每个月用户的累加数据
+        axios.get("/report/getMemberReport.do").then(res=>{
+            // this.$notify({
+            //     message: res.data.message,
+            //     type: res.data.flag ? 'success' : "error"
+            // });
             myChart1.setOption(
                                 {
                                     title: {
@@ -51,6 +149,7 @@
                                         data:['会员数量']
                                     },
                                     xAxis: {
+                                        // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                                         data: res.data.data.months
                                     },
                                     yAxis: {
@@ -59,38 +158,122 @@
                                     series: [{
                                         name: '会员数量',
                                         type: 'line',
+                                        // data: [820, 932, 901, 934, 1290, 1330, 1320],
                                         data: res.data.data.memberCount
                                     }]
                                 });
+            // 用户性性别分布
+            myChart2.setOption(
+                {
+
+                    title: {
+                        text: '会员性别分布',
+                        subtext: '真实数据,加分!',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b}: {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 10,
+                        data: ['男性', '女性', '中性']
+                    },
+                    series: [
+                        {
+                            name: '用户性别',
+                            type: 'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                label: {
+                                    show: true,
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                            data: [
+                                {value: 335, name: '男性'},
+                                {value: 310, name: '女性'},
+                                {value: 234, name: '中性'},
+
+                            ]
+                        }
+                    ]
+                });
+
+            // 用户年龄分布
+            myChart3.setOption(
+                {
+                    title: {
+                        text: '用户年龄分布',
+                        subtext: '',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: ['0-8','9-18', '19-30', '31-50', '51-70', '71-100','>100']
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                {value: 12, name: '0-8'},
+                                {value: 32, name: '9-18'},
+                                {value: 12, name: '19-30'},
+                                {value: 34, name: '31-50'},
+                                {value: 12, name: '51-70'},
+                                {value: 3, name: '71-100'},
+                                {value: 1, name: '>100'}
+                            ],
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
         });
+        // 用户年龄分布的数据请求
+        axios.get("/report/getMemberAgeReport.do").then((res)=>{
+            // 对应 chart2
+
+        });
+
+        // 用户性别分布的数据请求
+        axios.get("/report/getMemberSexReport.do").then((res)=>{
+            // 对应 chart3
+
+        });
+
+
+
+
     </script>
 
 
-   <!-- <script type="text/javascript">
-        var dom = document.getElementById("chart1");
-        var myChart = echarts.init(dom);
-        axios.get('/report/getMemeberReport.do').then(res=>{
-            var app = {};
-            option = null;
-            option = {
-                xAxis: {
-                    type: 'category',
-                    data: res.data.data.months  //List<String> ['2019-05','2019-06',.....'2020-02']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: res.data.data.membercount,//List<Integer> [100,200,......5000]
-                    type: 'line'
-                }]
-            };
-            ;
-            if (option && typeof option === "object") {
-                myChart.setOption(option, true);
-            }
-        })
-
-
-    </script>-->
 </html>
