@@ -1,0 +1,15 @@
+*.iml
+*/target
+*target
+*/out
+*/.idea
+/health_parent/.idea
+/health_parent/health_common/*.iml
+/health_parent/health_dao/*.iml
+/health_parent/health_interface/*.iml
+/health_parent/health_jobs/*.iml
+/health_parent/health_pojo/*.iml
+/health_parent/health_service/*.iml
+/health_parent/health_web/*.iml
+/health_parent/healthmobile_web/*.iml
+/health_parent/health_dao/src/main/resources/applicationContext-dao.xml

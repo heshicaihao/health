@@ -24,4 +24,6 @@ public interface OrderSettingService {
      * @param orderSetting
      */
     void editNumberByDate(OrderSetting orderSetting);
+    /*删除一周前的预约数据*/
+    void deleteLastMonthOrderSetting(String lastWeekDate);
 }

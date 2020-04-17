@@ -2,15 +2,13 @@ package com.itheima.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.dao.OrderSettingDao;
+import com.itheima.dao.OrderSettingHistoryDao;
 import com.itheima.pojo.OrderSetting;
 import com.itheima.service.OrderSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 预约设置业务逻辑处理层
@@ -22,6 +20,8 @@ import java.util.Map;
 public class OrderSettingServiceImpl implements OrderSettingService {
     @Autowired
     private OrderSettingDao orderSettingDao;
+    @Autowired
+    private OrderSettingHistoryDao orderSettingHistoryDao;
 
     @Override
     public void add(List<OrderSetting> orderSettingList) {
@@ -89,5 +89,35 @@ public class OrderSettingServiceImpl implements OrderSettingService {
             //4.数据不存在，则插入数据库
             orderSettingDao.add(orderSetting);
         }
+    }
+   /* 删除一周前的预约数据*/
+    @Override
+    public void deleteLastMonthOrderSetting(String lastWeekDate) {
+        //删除数据前先备份数据到表t_orderrsetting_history中
+         List<OrderSetting> orderSettingList =  orderSettingDao.findLastWeek(lastWeekDate);
+
+         if (orderSettingList != null && orderSettingList.size()>0){
+             Map<String,Object> objectMap = new HashMap<>();
+
+             for (OrderSetting orderSetting : orderSettingList) {
+                 Date orderDate = orderSetting.getOrderDate();
+                 int number = orderSetting.getNumber();
+                 Integer id = orderSetting.getId();
+                 int reservations = orderSetting.getReservations();
+                 objectMap.put("id",id);
+                 objectMap.put("orderDate",orderDate);
+                 objectMap.put("number",number);
+                 objectMap.put("reservations",reservations);
+                 orderSettingHistoryDao.backUp(objectMap);//备份数据
+             }
+
+             orderSettingDao.deleteLastMonthOrderSetting(lastWeekDate);//删除数据
+         }
+
+
+
+
+
+
     }
 }

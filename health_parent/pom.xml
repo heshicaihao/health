@@ -12,10 +12,10 @@
         <module>health_pojo</module>
         <module>health_dao</module>
         <module>health_interface</module>
-       <!-- <module>health_service</module>
+        <module>health_service</module>
         <module>health_web</module>
         <module>health_jobs</module>
-        <module>healthmobile_web</module>-->
+        <module>healthmobile_web</module>
     </modules>
 
     <!--设置打包方式-->
