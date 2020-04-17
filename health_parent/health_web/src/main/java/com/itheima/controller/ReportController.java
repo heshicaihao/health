@@ -295,8 +295,9 @@ public class ReportController {
         //获取起始日期
         Date begin = list.get(0);
         Date end = list.get(1);
-
+        //开始日期日历对象
         Calendar bef = Calendar.getInstance();
+        //结束日期日历对象
         Calendar aft = Calendar.getInstance();
         bef.setTime(begin);
         aft.setTime(end);
@@ -307,15 +308,12 @@ public class ReportController {
         int year2 = aft.get(Calendar.YEAR);
         int month2 = aft.get(Calendar.MONTH);
         //int result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
-        int m = 1;//定义月份
+        int m = 1;//定义月份  默认查询最少为一个月
 
         if (year1 == year2) {
-            m = month2 - month1;
-            if (m == 0) {
-                m = 1;
-            }
+            m = month2 - month1 + 1;//月份相同时 也查询一个月
         } else {
-            m = 12*(year2 - year1) + month2 - month1 +1;
+            m = 12*(year2 - year1) + month2 - month1 + 1;
         }
         List<String> listMonth = new ArrayList<String>();
         aft.add(Calendar.MONTH,-m);//获得当前选择结束日期之前n个月的会员人数
