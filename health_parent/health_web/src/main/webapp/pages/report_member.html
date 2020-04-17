@@ -101,7 +101,8 @@
     <script src="../js/vue.js"></script>
     <script src="../plugins/elementui/index.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="../css/index.css">
     <!-- 引入组件库 -->
     <script type="text/javascript">
 
@@ -116,12 +117,39 @@
                 show:function () {
 
                     axios.post("/report/getMemberCountBetweenDates.do",this.value1).then(res=>{
-
-
+                        this.$notify({
+                            message: res.data.message,
+                            type: res.data.flag ? 'success' : "error"
+                        });
+                        if (res.data.flag) {
+                            myChart1.setOption({
+                                title: {
+                                    text: '会员数量'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['会员数量']
+                                },
+                                xAxis: {
+                                    // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                    data: res.data.data.months
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    name: '会员数量',
+                                    type: 'line',
+                                    // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                                    // data: res.data.data.memberCount
+                                    data: res.data.data.memberCount
+                                }]
+                            })
+                        }
                     });
-                }
-            }
+                },
 
+            }
 
         });
 
@@ -134,34 +162,34 @@
         // 使用刚指定的配置项和数据显示图表。
         //myChart.setOption(option);
         // 显示每个月用户的累加数据
-        axios.get("/report/getMemberReport.do").then(res=>{
-            // this.$notify({
+        axios.get("/report/getMemberReport.do").then(res=> {
+            // this:$notify({
             //     message: res.data.message,
             //     type: res.data.flag ? 'success' : "error"
-            // });
-            myChart1.setOption(
-                                {
-                                    title: {
-                                        text: '会员数量'
-                                    },
-                                    tooltip: {},
-                                    legend: {
-                                        data:['会员数量']
-                                    },
-                                    xAxis: {
-                                        // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                                        data: res.data.data.months
-                                    },
-                                    yAxis: {
-                                        type:'value'
-                                    },
-                                    series: [{
-                                        name: '会员数量',
-                                        type: 'line',
-                                        // data: [820, 932, 901, 934, 1290, 1330, 1320],
-                                        data: res.data.data.memberCount
-                                    }]
-                                });
+            // }),
+            myChart1.setOption({
+                title: {
+                    text: '会员数量'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['会员数量']
+                },
+                xAxis: {
+                    // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: res.data.data.months
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '会员数量',
+                    type: 'line',
+                    // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: res.data.data.memberCount
+                }]
+            }),
+
             // 用户性性别分布
             myChart2.setOption(
                 {

@@ -124,8 +124,8 @@
 					  total:0,//总记录数
 					  queryString:null//查询条件
 				},
-				dataList: [{id:1,name:"龙城",keyword:"add"}],//当前页要展示的分页列表数据
-                formData: {name:"龙城"},//表单数据
+				dataList: [],//当前页要展示的分页列表数据
+                formData: {},//表单数据
                 dialogFormVisible: false,//增加表单是否可见
                 dialogFormVisible4Edit:false,//编辑表单是否可见
                 rules: {//校验规则
@@ -170,7 +170,8 @@
 
                     }).catch((error) => {
                         this.showErrorMessage(error);
-                    });
+                    });//查询数据
+                    this.findPage();
 
                 },
 
@@ -219,7 +220,6 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
-                    this.dialogFormVisible4Edit = true;
                     axios.get("/permission/getPermissionById.do?id=" + row.id).then(res=>{
                         if (res.data.flag) {
                             // 获取数据并赋值

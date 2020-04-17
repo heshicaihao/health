@@ -95,4 +95,8 @@
     <select id="findMemberTotalCount" resultType="int">
         select count(id) from t_member
     </select>
+    <!--指定日期会员数 -->
+    <select id="getMemberCountBetweenDates" parameterType="String" resultType="int">
+        select cout(*) from t_member where regTime = #{value}
+    </select>
 </mapper>
