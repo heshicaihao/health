@@ -1,5 +1,6 @@
 package com.itheima.service;
 
+import com.itheima.entity.PageResult;
 import com.itheima.pojo.User;
 
 /**
@@ -15,4 +16,10 @@ public interface UserService {
      * @return
      */
     User findByUserName(String username);
+
+    /**
+     * 获取当用户的用户列表 分页
+     */
+    PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
+
 }

@@ -1,9 +1,15 @@
 package com.itheima.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
+import com.itheima.entity.PageResult;
+import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
+import com.itheima.service.SetmealService;
+import com.itheima.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Reference
+    private UserService userService;
 
     /**
      * 获取当前登录用户的用户名
@@ -32,4 +41,19 @@ public class UserController {
             return new Result(false, MessageConstant.GET_USERNAME_FAIL);
         }
     }
+
+    /**
+     * 获取当用户的用户列表 分页
+     */
+    @RequestMapping("/getUserlist")
+    public PageResult getUserlist(@RequestBody QueryPageBean queryPageBean) {
+        try {
+            PageResult pageResult = userService.findPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize(), queryPageBean.getQueryString());
+            return pageResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
