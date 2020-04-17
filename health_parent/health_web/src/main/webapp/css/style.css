@@ -29,7 +29,7 @@ a {
 }
 .skin-purple .main-header .navbar {
 	height: 70px;
-	background: linear-gradient(to right, #0abdfe, #67f0e0);
+	background: linear-gradient(to right, #3975e1, #5878d3);
   /* margin-left: 230px; */
 }
 .winfo{margin-left: 230px;}
@@ -509,6 +509,29 @@ label input[type="radio"]:checked {
 	width: 100%;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
+
+.Rbox {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #3c8dbc;
+	padding: 10px;
+	margin-bottom: 20px;
+	width: 40%;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.Lbox {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #3c8dbc;
+	padding: 10px;
+	margin-bottom: 20px;
+	width: 80%;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
 .filter-container{
 	padding:10px 0 15px 0;
 }
