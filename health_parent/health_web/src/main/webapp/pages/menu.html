@@ -271,17 +271,19 @@
                         queryString  : this.pagination.queryString
                     };
                     axios.post("/menu/getAllMenus.do",params).then(res=>{
-                        this.$notify({
+                        /*this.$notify({
                             message: res.data.message,
                             type: res.data.flag ? 'success' : "error"
-                        });
+                        });*/
+                        this.dataList = res.data.rows;
+                        this.pagination.total = res.data.total;
 
-                        if (res.data.flag) {
+                       /* if (res.data.flag) {
                             // 返回的是pageResult(含total和rows)
-                            this.dataList = res.data.data.rows;
-                            this.pagination.total = res.data.data.total;
+                            this.dataList = res.data.rows;
+                            this.pagination.total = res.data.total;
 
-                        }
+                        }*/
 
                     })
 
@@ -325,7 +327,7 @@
                         type: 'warning'
                     }).then(() => {
                         // 确定删除是发送ajax请求
-                        axios.get("/menu/updateMenuById.do?id="+id).then(res=>{
+                        axios.get("/menu/deleteMenuById.do?id="+id).then(res=>{
                             console.log(res.data.flag);
                             if (res.data.flag) {
                                 this.$message.success(res.data.message);

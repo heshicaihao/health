@@ -9,7 +9,49 @@
 
 
     <!--新增菜单-->
+    <select id="findcountByparentMenuId" parameterType="int" resultType="int">
+        select count(*) from t_menu where parentMenuId = #{parentMenuId}
+    </select>
     <insert id="">
-        insert into 1111111111111
+        insert into t_mennu (name,linkUrl,path,priority,description,icon,parentMenuId,level)
+        values (#{name},#{linkUrl},#{path},#{priority},#{description},#{icon},#{parentMenuId},#{level})
     </insert>
+
+
+<!--分页查询-->
+    <select id="getAllMenus" parameterType="string" resultType="com.itheima.pojo.Menu">
+        select * from t_menu
+        <if test="value !=null and value.length>0">
+            where name like '%${value}%'
+        </if>
+
+    </select>
+
+    <!--弹出编辑窗口的数据-->
+    <select id="getMenuById" parameterType="int" resultType="com.itheima.pojo.Menu">
+        select * from t_menu where id = #{id}
+    </select>
+
+    <!--编辑菜单-->
+    <update id="updateMenuById" parameterType="com.itheima.pojo.Menu">
+        update t_menu set
+        name = #{name},
+        linkUrl = #{linkUrl},
+        path = #{path},
+        priority = #{priority},
+        description = #{description},
+        icon = #{icon},
+        parentMenuId = #{parentMenuId},
+        level = #{level}
+        where id = #{id}
+    </update>
+
+    <!--删除菜单-->
+    <!--判断是否存在关联表-->
+    <select id="findroleIdcountBymenuId" parameterType="int" resultType="int">
+        select count(*) from t_role_menu where menu_id = #{id}
+    </select>
+    <delete id="deleteMenuById" parameterType="int">
+        delete from t_menu where id = #{id}
+    </delete>
 </mapper>
