@@ -72,8 +72,8 @@ public class MessageConstant {
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
     public static final String DELETE_CHECKITEM_GROUP_FAIL = "当前检查项和检查组已经关联，无法删除";
     public static final String DELETE_CHECKGROUP_SETMEAL_FAIL = "当前检查组和套餐已经关联，无法删除";
-    public static final String GET_PERMISSION_SUCCESS = "查询权限成功";
-    public static final String GET_PERMISSION_FAIL = "查询权限失败";
+    public static final String GET_PERMISSION_SUCCESS = "查询成功";
+    public static final String GET_PERMISSION_FAIL = "查询失败";
     public static final String ADD_PERMISSION_FAIL = "新增权限失败";
     public static final String ADD_PERMISSION_SUCCESS = "新增权限成功";
     public static final String DELETE_PERMISSION_FAIL = "存在关联删除失败";
