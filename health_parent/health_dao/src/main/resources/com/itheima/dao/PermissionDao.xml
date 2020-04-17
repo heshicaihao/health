@@ -37,4 +37,9 @@
         insert  into t_permission (name,keyword,description) values (#{name},#{keyword},#{description})
     </insert>
 
+    <!--删除-->
+    <delete id="deletePermissionById" parameterType="Integer">
+        delete from t_permission where id= #{id}
+    </delete>
+
 </mapper>

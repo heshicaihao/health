@@ -22,4 +22,9 @@ public interface PermissionsService {
      * 添加
      */
     void addPermission(Permission permission);
+
+    /**
+     * 删除
+     */
+    void deletePermissionById(Integer id);
 }

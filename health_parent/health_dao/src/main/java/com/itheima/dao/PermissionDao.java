@@ -50,4 +50,9 @@ public interface PermissionDao {
      * 添加关键字数量查询
      */
     int findPermissionByKeywordCount(String keyword);
+
+    /**
+     * 删除
+     */
+    void deletePermissionById(Integer id);
 }

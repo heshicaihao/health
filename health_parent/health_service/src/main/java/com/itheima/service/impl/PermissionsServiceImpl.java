@@ -35,6 +35,7 @@ public class PermissionsServiceImpl implements PermissionsService {
             PermissionPage = permissionDao.getAllPermissions(queryString);
         }
         PageInfo<Permission> pageInfo = new PageInfo<>(PermissionPage);
+
         return new PageResult(pageInfo.getTotal(), pageInfo.getList());
     }
 
@@ -56,7 +57,7 @@ public class PermissionsServiceImpl implements PermissionsService {
         if (permission != null) {
             int count1 = permissionDao.findPermissionByNameCount(permission.getName());
             if (count1 > 0) {
-                throw new RuntimeException(MessageConstant.ADD_PERMISSION_SUCCESS);
+                throw new RuntimeException(MessageConstant.ADD_PERMISSION_FAIL);
             }
             int count2 = permissionDao.findPermissionByKeywordCount(permission.getKeyword());
             if (count2 > 0) {
@@ -64,6 +65,14 @@ public class PermissionsServiceImpl implements PermissionsService {
             }
             permissionDao.addPermission(permission);
         }
+    }
+
+    /**
+     * 删除
+     */
+    @Override
+    public void deletePermissionById(Integer id) {
+         permissionDao.deletePermissionById(id);
     }
 }
 

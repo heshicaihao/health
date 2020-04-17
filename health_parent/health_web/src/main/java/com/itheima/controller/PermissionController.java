@@ -62,4 +62,26 @@ public class PermissionController {
         }
     }
 
+    /**
+     * 删除
+     */
+    @RequestMapping("/deletePermissionById")
+    public Result deletePermissionById(Integer id){
+        try {
+            permissionsService.deletePermissionById(id);
+            return new Result(true,MessageConstant.DELETE_PERMISSION_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_PERMISSION_FAIL);
+        }
+    }
+    /**
+     * 编辑
+     */
+    /*@RequestMapping("/updatePermissionById")
+    public Result updatePermissionById(@RequestBody Permission permission){
+     permissionsService.updatePermissionById(permission);
+        return new Result(true,MessageConstant.EDIT_PERMISSION_SUCCESS);
+
+    }*/
 }

@@ -220,7 +220,6 @@
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {
-                    this.dialogFormVisible4Edit = true;
                     axios.get("/permission/getPermissionById.do?id=" + row.id).then(res=>{
                         if (res.data.flag) {
                             // 获取数据并赋值
