@@ -15,6 +15,7 @@ import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ import java.util.*;
 @RequestMapping("/report")
 public class ReportController {
     @Reference
-   private MemeberService memeberService;
+    private MemeberService memeberService;
 
 
     @Reference
@@ -50,23 +51,23 @@ public class ReportController {
      * 会员数量折线图
      */
     @RequestMapping("/getMemberReport")
-    public Result getMemberReport(){
+    public Result getMemberReport() {
         try {
             List<String> listMonth = new ArrayList<>();
             //1.获取最近一年的年月  res.data.data.months  ['2020-01','2020-02'...]
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MONTH,-12);//获取当前日期之前的12个月之前时间
-            for (int i=0;i<12;i++){
-                calendar.add(Calendar.MONTH,1);
+            calendar.add(Calendar.MONTH, -12);//获取当前日期之前的12个月之前时间
+            for (int i = 0; i < 12; i++) {
+                calendar.add(Calendar.MONTH, 1);
                 listMonth.add(new SimpleDateFormat("yyyy-MM").format(calendar.getTime()));
             }
             //2.调用会员服务 获取年月会员数量
-            List<Integer> memberCount =  memeberService.findMemberCountByMonth(listMonth);
+            List<Integer> memberCount = memeberService.findMemberCountByMonth(listMonth);
             //3.将年月 以及 会员数量 存入map返回前端
-            Map<String,Object>  map = new HashMap<>();
-            map.put("months",listMonth);
-            map.put("memberCount",memberCount);
-            return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
+            Map<String, Object> map = new HashMap<>();
+            map.put("months", listMonth);
+            map.put("memberCount", memberCount);
+            return new Result(true, MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS, map);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.GET_MEMBER_NUMBER_REPORT_FAIL);
@@ -99,8 +100,7 @@ public class ReportController {
         map.put("setmealCount", setmealCount);
 
 
-
-        return new Result(true,MessageConstant.GET_SETMEAL_COUNT_REPORT_SUCCESS,map);
+        return new Result(true, MessageConstant.GET_SETMEAL_COUNT_REPORT_SUCCESS, map);
     }
 
 
@@ -110,15 +110,15 @@ public class ReportController {
     @RequestMapping("/getBusinessReportData")
     public Result getBusinessReportData() {
         try {
-            Map<String,Object> map = reportService.getBusinessReportData();
-            return new Result(true,MessageConstant.GET_BUSINESS_REPORT_SUCCESS,map);
+            Map<String, Object> map = reportService.getBusinessReportData();
+            return new Result(true, MessageConstant.GET_BUSINESS_REPORT_SUCCESS, map);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.GET_BUSINESS_REPORT_FAIL);
+            return new Result(false, MessageConstant.GET_BUSINESS_REPORT_FAIL);
         }
     }
 
-   /* *//**
+    /* *//**
      * 导出运营数据统计报表
      *//*
     @RequestMapping("/exportBusinessReport")
@@ -223,7 +223,7 @@ public class ReportController {
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         try {
             //1.获取模板需要的数据（已经实现getBusinessReportData）
-            Map<String,Object> map = reportService.getBusinessReportData();
+            Map<String, Object> map = reportService.getBusinessReportData();
             //2.获取模板  File.separator:windows和linux /可以通用
             String templateRealPath = request.getSession().getServletContext().getRealPath("template") + File.separator + "report_template.xlsx";
             //3.到模板对象后(内存中)
@@ -237,7 +237,7 @@ public class ReportController {
             //设置返回的数据类型  告诉浏览器下载excel文件
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");//
             //设置响应头信息 告诉浏览器下载文件名称
-            response.setHeader("content-Disposition","attachment;filename=report.xlsx");
+            response.setHeader("content-Disposition", "attachment;filename=report.xlsx");
             xssfWorkbook.write(outputStream);
             //5.资源释放
             outputStream.flush();//刷新
@@ -246,7 +246,7 @@ public class ReportController {
             return null;//以输出流形式下载文件到本地
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.GET_BUSINESS_REPORT_FAIL);
+            return new Result(false, MessageConstant.GET_BUSINESS_REPORT_FAIL);
         }
     }
 
@@ -260,13 +260,13 @@ public class ReportController {
         try {
             // 获取PDF报表数据（代码已经存在）
             Map<String, Object> businessReportData = reportService.getBusinessReportData();
-            List<Map> hotSetmeal = (List<Map>)businessReportData.get("hotSetmeal");
+            List<Map> hotSetmeal = (List<Map>) businessReportData.get("hotSetmeal");
             // 编译模板
             //获取模板文件路径
             String jrxmlTemplate = request.getSession().getServletContext().getRealPath("template") + File.separator + "health_bus.jrxml";
             //设置编译后的模板文件路径
             String jasperTemplate = request.getSession().getServletContext().getRealPath("template") + File.separator + "health_bus.jasper";
-            JasperCompileManager.compileReportToFile(jrxmlTemplate,jasperTemplate);
+            JasperCompileManager.compileReportToFile(jrxmlTemplate, jasperTemplate);
             // 填充数据（编译后的模板、parameters，hotSetmeal热门套餐数据）
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperTemplate, businessReportData, new JRBeanCollectionDataSource(hotSetmeal));
             // 导出报表
@@ -274,16 +274,60 @@ public class ReportController {
             //设置返回的数据类型  告诉浏览器下载excel文件
             response.setContentType("application/pdf");//
             //设置响应头信息 告诉浏览器下载文件名称
-            response.setHeader("content-Disposition","attachment;filename=report.pdf");
-            JasperExportManager.exportReportToPdfStream(jasperPrint,outputStream);
+            response.setHeader("content-Disposition", "attachment;filename=report.pdf");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
             outputStream.flush();//刷新
             outputStream.close();//输出流资源释放
 
-            return  null;
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.GET_BUSINESS_REPORT_FAIL);
+            return new Result(false, MessageConstant.GET_BUSINESS_REPORT_FAIL);
         }
 
+    }
+
+    /**
+     * 会员数指定时间段展示getMemberCountBetweenDates
+     */
+    @RequestMapping("/getMemberCountBetweenDates")
+    public Result getMemberCountBetweenDates(@RequestBody List<Date> list) {
+        //获取起始日期
+        Date begin = list.get(0);
+        Date end = list.get(1);
+
+        Calendar bef = Calendar.getInstance();
+        Calendar aft = Calendar.getInstance();
+        bef.setTime(begin);
+        aft.setTime(end);
+        //获取起始年月
+        int year1 = bef.get(Calendar.YEAR);
+        int month1 = bef.get(Calendar.MONTH);
+
+        int year2 = aft.get(Calendar.YEAR);
+        int month2 = aft.get(Calendar.MONTH);
+        //int result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
+        int m = 1;//定义月份
+
+        if (year1 == year2) {
+            m = month2 - month1;
+            if (m == 0) {
+                m = 1;
+            }
+        } else {
+            m = 12*(year2 - year1) + month2 - month1 +1;
+        }
+        List<String> listMonth = new ArrayList<String>();
+        aft.add(Calendar.MONTH,-m);//获得当前选择结束日期之前n个月的会员人数
+        for (int i = 0; i < m; i++) {
+            aft.add(Calendar.MONTH,1);
+            listMonth.add(new SimpleDateFormat("yyyy-MM").format(aft.getTime()));
+        }
+        Map<String,Object> map = new HashMap();
+        map.put("months",listMonth);
+        
+        List<Integer> memberCount = memeberService.findMemberCountByMonth(listMonth);
+        map.put("memberCount",memberCount);
+        return new Result(true,MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
     }
 }
