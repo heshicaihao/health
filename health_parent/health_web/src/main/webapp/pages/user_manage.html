@@ -58,69 +58,87 @@
                             :total="pagination.total">
                         </el-pagination>
                     </div>
-                    <!-- 新增标签弹层 -->
+
                     <div class="add-form">
-                        <!--:visible.sync="dialogFormVisible"-->
-                        <el-dialog title="新增检查项" :visible.sync="dialogFormVisible">
-                            <el-form ref="dataAddForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="用户编码" prop="code">
-                                            <el-input v-model="formData.id"/>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="用户名称" prop="name">
-                                            <el-input v-model="formData.username"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="性别">
-                                            <el-select v-model="formData.sex">
-                                                <el-option label="不限" value="0"></el-option>
-                                                <el-option label="男" value="1"></el-option>
-                                                <el-option label="女" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="角色>
-                                            <el-input v-model="formData.roles"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="类型">
-                                            <el-select v-model="formData.type">
-                                                <el-option label="检查" value="1"></el-option>
-                                                <el-option label="检验" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="价格">
-                                            <el-input v-model="formData.price"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="项目说明">
-                                            <el-input v-model="formData.remark" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="注意事项">
-                                            <el-input v-model="formData.attention" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-form>
+                        <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
+                            <template>
+                                <el-tabs v-model="activeName" type="card">
+                                    <el-tab-pane label="基本信息" name="first">
+                                        <el-form label-position="right" label-width="100px">
+                                            <el-row>
+                                                <el-col :span="24">
+                                                    <el-form-item label="用户名">
+                                                        <el-input v-model="formData.username"/>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row>
+                                                <el-col :span="24">
+                                                    <el-form-item label="默认密码">
+                                                        <el-input v-model="formData.password"/>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row>
+                                                <el-col :span="12">
+                                                    <el-form-item label="适用性别">
+                                                        <el-select v-model="formData.sex">
+                                                            <el-option label="不限" value="0"></el-option>
+                                                            <el-option label="男" value="1"></el-option>
+                                                            <el-option label="女" value="2"></el-option>
+                                                        </el-select>
+                                                    </el-form-item>
+                                                </el-col>
+                                                <el-col :span="12">
+                                                    <el-form-item label="手机号码">
+                                                        <el-input v-model="formData.telephone"/>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row>
+                                                <el-col :span="24">
+                                                    <el-form-item label="生日">
+                                                        <el-input v-model="formData.birthday"/>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-row>
+                                            <el-row>
+                                                <el-col :span="24">
+                                                    <el-form-item label="备注">
+                                                        <el-input v-model="formData.remark"/>
+                                                    </el-form-item>
+                                                </el-col>
+                                            </el-row>
+                                        </el-form>
+                                    </el-tab-pane>
+                                    <el-tab-pane label="检查组信息" name="second">
+                                        <div class="checkScrol">
+                                            <table class="datatable">
+                                                <thead>
+                                                <tr>
+                                                    <th>选择</th>
+                                                    <th>角色编码</th>
+                                                    <th>关键字</th>
+                                                    <th>角色名称</th>
+                                                    <th>描述</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr v-for="c in tableData">
+                                                    <td>
+                                                        <input :id="c.id" v-model="checkgroupIds" type="checkbox" :value="c.id">
+                                                    </td>
+                                                    <td><label :for="c.id">{{c.id}}</label></td>
+                                                    <td><label :for="c.id">{{c.keyword}}</label></td>
+                                                    <td><label :for="c.id">{{c.name}}</label></td>
+                                                    <td><label :for="c.id">{{c.description}}</label></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </el-tab-pane>
+                                </el-tabs>
+                            </template>
                             <div slot="footer" class="dialog-footer">
                                 <el-button @click="dialogFormVisible = false">取消</el-button>
                                 <el-button type="primary" @click="handleAdd()">确定</el-button>
@@ -128,74 +146,7 @@
                         </el-dialog>
                     </div>
 
-                    <!-- 编辑标签弹层 -->
-                    <div class="add-form">
-                        <el-dialog title="编辑检查项" :visible.sync="dialogFormVisible4Edit">
-                            <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="项目编码" prop="code">
-                                            <el-input v-model="formData.code"/>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="项目名称" prop="name">
-                                            <el-input v-model="formData.name"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="性别">
-                                            <el-select v-model="formData.sex">
-                                                <el-option label="不限" value="0"></el-option>
-                                                <el-option label="男" value="1"></el-option>
-                                                <el-option label="女" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="适用年龄">
-                                            <el-input v-model="formData.age"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="12">
-                                        <el-form-item label="类型">
-                                            <el-select v-model="formData.type">
-                                                <el-option label="检查" value="1"></el-option>
-                                                <el-option label="检验" value="2"></el-option>
-                                            </el-select>
-                                        </el-form-item>
-                                    </el-col>
-                                    <el-col :span="12">
-                                        <el-form-item label="价格">
-                                            <el-input v-model="formData.price"/>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="项目说明">
-                                            <el-input v-model="formData.remark" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                                <el-row>
-                                    <el-col :span="24">
-                                        <el-form-item label="注意事项">
-                                            <el-input v-model="formData.attention" type="textarea"></el-input>
-                                        </el-form-item>
-                                    </el-col>
-                                </el-row>
-                            </el-form>
-                            <div slot="footer" class="dialog-footer">
-                                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
-                                <el-button type="primary" @click="handleEdit()">确定</el-button>
-                            </div>
-                        </el-dialog>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -215,7 +166,10 @@
 					  total:0,//总记录数
 					  queryString:null//查询条件
 				},
+                activeName:'first',//添加/编辑窗口Tab标签名称
+                tableData:[],//添加表单窗口中检查组列表数据
 				dataList: [],//当前页要展示的分页列表数据
+                checkgroupIds: [],//表单数据
                 formData: {},//表单数据
                 dialogFormVisible: false,//增加表单是否可见
                 dialogFormVisible4Edit:false,//编辑表单是否可见
@@ -322,8 +276,17 @@
                 handleCreate() {
                     //弹出窗口
                     this.dialogFormVisible = true;
-                    //重置窗口
                     this.resetForm();
+                    //查询检查组列表
+                    axios.get('/role/findAll.do').then(res=>{
+                        this.$message({
+                            message: res.data.message,
+                            type: res.data.flag ? 'success':"error"
+                        });
+                        if(res.data.flag){
+                            this.tableData = res.data.data;
+                        }
+                    })
                 },
                 // 弹出编辑窗口
                 handleUpdate(row) {//alert(JSON.stringify(row));

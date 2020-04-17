@@ -12,4 +12,10 @@
     <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
         select  tr.*  from t_role tr,t_user_role tur where tr.id = tur.role_id and tur.user_id = #{userId}
     </select>
+
+    <!--查询所有角色列表-->
+    <select id="findAll" resultType="com.itheima.pojo.Role">
+        select * from t_role
+    </select>
+
 </mapper>
