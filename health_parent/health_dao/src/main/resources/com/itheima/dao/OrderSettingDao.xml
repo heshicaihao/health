@@ -37,5 +37,13 @@
     <update id="editReservationsByOrderDate" parameterType="date">
         update t_ordersetting set reservations = reservations +1 where orderDate =#{orderDate}
     </update>
+    <!--删除一周前的预约数据-->
+    <delete id="deleteLastMonthOrderSetting" parameterType="java.lang.String">
+        delete  from t_ordersetting where orderDate &lt;= #{value}
+    </delete>
+
+    <select id="findLastWeek" parameterType="java.lang.String" resultType="com.itheima.pojo.OrderSetting">
+        select * from t_ordersetting where orderDate &lt;= #{value}
+    </select>
 
 </mapper>
