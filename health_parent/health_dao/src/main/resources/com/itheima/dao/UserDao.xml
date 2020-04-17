@@ -14,7 +14,7 @@
     </select>
 
     <!--用户列表分页-->
-    <select id="selectByCondition" parameterType="string" resultType="com.itheima.pojo.User">
+    <select id="selectByCondition" parameterType="string" resultMap="userMap">
         select * from t_user
         <if test="value !=null and value.length >0">
             where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value}

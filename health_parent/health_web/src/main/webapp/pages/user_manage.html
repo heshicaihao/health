@@ -26,7 +26,7 @@
             <div class="app-container">
                 <div class="box">
                     <div class="filter-container">
-                        <el-input placeholder="用户编码/用户名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
+                        <el-input placeholder="用户编码/用户名称/手机号" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
                         <el-button @click="findPage()" class="dalfBut">查询</el-button>
                         <el-button type="primary" class="butT" @click="handleCreate()">新建</el-button>
                     </div>
@@ -307,7 +307,7 @@
                             queryString:this.pagination.queryString//查询条件
                         }
                     ///分页查询
-                    axios.post('/checkitem/findPage.do',queryPageBean).then(res=>{
+                    axios.post('/user/findPage.do',queryPageBean).then(res=>{
                         //PageResult
                         this.pagination.total = res.data.total; //响应总记录数
                         this.dataList = res.data.rows; //响应的数据

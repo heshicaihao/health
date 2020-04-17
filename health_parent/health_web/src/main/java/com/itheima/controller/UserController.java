@@ -45,7 +45,7 @@ public class UserController {
     /**
      * 获取当用户的用户列表 分页
      */
-    @RequestMapping("/getUserlist")
+    @RequestMapping("/findPage")
     public PageResult getUserlist(@RequestBody QueryPageBean queryPageBean) {
         try {
             PageResult pageResult = userService.findPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize(), queryPageBean.getQueryString());
