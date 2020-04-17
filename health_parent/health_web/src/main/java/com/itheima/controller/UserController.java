@@ -5,6 +5,7 @@ import com.itheima.constant.MessageConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
+import com.itheima.pojo.Role;
 import com.itheima.service.SetmealService;
 import com.itheima.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 用户模块控制层
@@ -49,6 +53,21 @@ public class UserController {
     public PageResult getUserlist(@RequestBody QueryPageBean queryPageBean) {
         try {
             PageResult pageResult = userService.findPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize(), queryPageBean.getQueryString());
+            List<com.itheima.pojo.User> rows = pageResult.getRows();
+            for (int i = 0; i < rows.size(); i++) {
+                com.itheima.pojo.User user =rows.get(i);
+                Set<Role> roles = user.getRoles();
+                String rolesString  = "";
+                for(Role role : roles){
+                    if ("".equals(rolesString)){
+                        rolesString = rolesString+role.getName();
+                    }else {
+                        rolesString = rolesString+","+role.getName();
+                    }
+                }
+                user.setRoles_list_show(rolesString);
+
+            }
             return pageResult;
         } catch (Exception e) {
             e.printStackTrace();

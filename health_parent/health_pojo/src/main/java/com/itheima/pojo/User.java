@@ -21,15 +21,7 @@ public class User implements Serializable{
     private String roles_list_show = "";//处理多个角色拼接问题
 
     public String getRoles_list_show() {
-        String rolesString  = "";
-        for(Role role : roles){
-            if ("".equals(rolesString)){
-                rolesString = rolesString+role.getName();
-            }else {
-                rolesString = rolesString+","+role.getName();
-            }
-        }
-        return rolesString;
+        return roles_list_show;
     }
 
     public void setRoles_list_show(String roles_list_show) {
