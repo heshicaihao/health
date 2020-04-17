@@ -2,6 +2,7 @@ package com.itheima.test;
 
 public class Test {
     public static void main(String[] args) {
-        System.out.println("dddiiidddpppp");
+        Class<Test> testClass = Test.class;
+        System.out.println(testClass);
     }
 }

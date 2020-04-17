@@ -50,4 +50,8 @@ public interface OrderSettingDao {
      * @param orderDate
      */
     void editReservationsByOrderDate(Date orderDate);
+
+    void deleteLastMonthOrderSetting(String lastWeekDate);
+
+    List<OrderSetting> findLastWeek(String lastWeekDate);
 }
