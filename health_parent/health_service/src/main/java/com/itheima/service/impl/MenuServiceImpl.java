@@ -1,6 +1,7 @@
 package com.itheima.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.itheima.constant.MessageConstant;
 import com.itheima.dao.MenuDao;
 import com.itheima.pojo.Menu;
 import com.itheima.service.MenuService;
@@ -65,5 +66,22 @@ public class MenuServiceImpl implements MenuService {
         }
         //只需返回父菜单集合,子菜单在对应的父菜单中
         return parentList;
+    }
+
+
+    /**
+     * 晴天:
+     * 新增菜单
+     * @param menu
+     */
+    @Override
+    public void addMenu(Menu menu) {
+        //判断是否输入parentMenuId,有就允许添加,没有久不允许添加
+        Integer parentMenuId = menu.getParentMenuId();
+        int count = menuDao.findcountByparentMenuId(parentMenuId);
+        if (count<=0){
+            throw new RuntimeException(MessageConstant.ADD_MENUS_FALL);
+        }
+        menuDao.addMenu(menu);
     }
 }

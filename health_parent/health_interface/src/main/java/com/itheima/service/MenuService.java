@@ -11,4 +11,12 @@ public interface MenuService {
 
     //根据用户id查询用户的菜单列表
     List<Menu> findMenuListByUserIdAndRoleId(Integer id);
+
+
+    /**
+     * 晴天:
+     * 新增菜单
+     * @param menu
+     */
+    void addMenu(Menu menu);
 }

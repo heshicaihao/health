@@ -14,4 +14,19 @@ public interface MenuDao {
      * @return
      */
     List<Menu> findMenuListByUserIdAndRoleId(Integer id);
+
+    /**
+     * 晴天:
+     * 新增菜单:1.判断父id是否存在,存在可添加,不存在不添加
+     * @param parentMenuId
+     * @return
+     */
+    int findcountByparentMenuId(Integer parentMenuId);
+
+    /**
+     * 晴天:
+     * 新增菜单:2.添加菜单项
+     * @param menu
+     */
+    void addMenu(Menu menu);
 }
