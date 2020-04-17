@@ -16,7 +16,9 @@ public interface UserDao {
      * @return
      */
     User findByUserName(String username);
-
+    /**
+     * 根据查询条件 获取的用户列表 分页
+     */
     Page<Setmeal> selectByCondition(String queryString);
 
 }
