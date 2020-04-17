@@ -39,7 +39,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://E:/java/jdk1.8.0_231/lib/jconsole.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_231/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
