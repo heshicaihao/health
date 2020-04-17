@@ -9,10 +9,9 @@
         <meta name="keywords" content="传智健康">
         <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
         <!-- 引入样式 -->
-        <script src="../js/vue.js"></script>
-        <script src="../plugins/elementui/index.js"></script>
+
         <link rel="stylesheet" href="../css/style.css">
-        <script src="../plugins/echarts/echarts.js"></script>
+        <script src="../js/echarts.js"></script>
         <style>
             .el-header, .el-footer {
                 background-color: #B3C0D1;
@@ -59,28 +58,40 @@
 
 
             </div>
+            <div class="block" style="margin-left:7em">
+                <!--提示用户的标签-->
+                <el-tag size="medium" type="success">自定义检索时间</el-tag>
+
+                <el-date-picker
+                        v-model="value1"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        format="yyyy 年 MM 月 dd 日"
+                        unlink-panels="false"
+                        value-format="yyyy-MM-dd">
+                    end-placeholder="结束日期">
+                </el-date-picker>
+                <el-button type="primary" size="medium" @click="show()" icon="el-icon-search" plain>搜索</el-button>
+
+            </div>
             <!--<div class="app-container">-->
 
             <!--</div>-->
             <el-container>
-                <el-main width="200px">
-                    <span class="app-container">
                         <div class="box">
                             <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                            <div id="chart1" style="height:600px;"></div>
+                            <div id="chart1" style="height:500px;"></div>
                         </div>
 
-                        <div class="box">
+                        <div class="Rbox">
                             <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                            <div id="chart2" style="height:600px;"></div>
+                            <div id="chart2" style="height:500px;"></div>
                         </div>
-                        <div class="box">
+                        <div class="Rbox">
                             <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-                            <div id="chart3" style="height:600px;"></div>
+                            <div id="chart3" style="height:500px;"></div>
                         </div>
-                    </span>
-                </el-main>
-
             </el-container>
 
 
@@ -90,7 +101,57 @@
     <script src="../js/vue.js"></script>
     <script src="../plugins/elementui/index.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
+    <link rel="stylesheet" href="../css/index.css">
+    <!-- 引入组件库 -->
     <script type="text/javascript">
+
+        new Vue({
+            el:"#app",
+            data:{
+                value1: '',
+
+            },
+
+            methods:{
+                show:function () {
+
+                    axios.post("/report/getMemberCountBetweenDates.do",this.value1).then(res=>{
+                        this.$notify({
+                            message: res.data.message,
+                            type: res.data.flag ? 'success' : "error"
+                        });
+                        if (res.data.flag) {
+                            myChart1.setOption({
+                                title: {
+                                    text: '会员数量'
+                                },
+                                tooltip: {},
+                                legend: {
+                                    data: ['会员数量']
+                                },
+                                xAxis: {
+                                    // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                    data: res.data.data.months
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    name: '会员数量',
+                                    type: 'line',
+                                    // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                                    // data: res.data.data.memberCount
+                                    data: res.data.data.memberCount
+                                }]
+                            })
+                        }
+                    });
+                },
+
+            }
+
+        });
 
 
         // 基于准备好的dom，初始化echarts实例
@@ -101,34 +162,34 @@
         // 使用刚指定的配置项和数据显示图表。
         //myChart.setOption(option);
         // 显示每个月用户的累加数据
-        axios.get("/report/getMemberReport.do").then((res)=>{
-            // this.$notify({
+        axios.get("/report/getMemberReport.do").then(res=> {
+            // this:$notify({
             //     message: res.data.message,
             //     type: res.data.flag ? 'success' : "error"
-            // });
-            myChart1.setOption(
-                                {
-                                    title: {
-                                        text: '会员数量'
-                                    },
-                                    tooltip: {},
-                                    legend: {
-                                        data:['会员数量']
-                                    },
-                                    xAxis: {
-                                        // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                                        data: res.data.data.months
-                                    },
-                                    yAxis: {
-                                        type:'value'
-                                    },
-                                    series: [{
-                                        name: '会员数量',
-                                        type: 'line',
-                                        // data: [820, 932, 901, 934, 1290, 1330, 1320],
-                                        data: res.data.data.memberCount
-                                    }]
-                                });
+            // }),
+            myChart1.setOption({
+                title: {
+                    text: '会员数量'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['会员数量']
+                },
+                xAxis: {
+                    // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: res.data.data.months
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: '会员数量',
+                    type: 'line',
+                    // data: [820, 932, 901, 934, 1290, 1330, 1320],
+                    data: res.data.data.memberCount
+                }]
+            }),
+
             // 用户性性别分布
             myChart2.setOption(
                 {

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.jws.Oneway;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 会员服务业务逻辑处理层
@@ -41,4 +42,17 @@ public class MemeberServiceImpl implements MemeberService {
         }
         return memberCount;
     }
+
+  /*  @Override
+    public List<Integer> getMemberCountBetweenDates(List<String> listMonth) {
+        //定义list集合存放会员数量
+        List<Integer> memberCount = new ArrayList<>();
+        if (listMonth != null && listMonth.size() > 0) {
+            for (String month : listMonth) {
+                Integer count = memberDao.getMemberCountBetweenDates(month);
+                memberCount.add(count);
+            }
+        }
+        return memberCount;
+    }*/
 }
