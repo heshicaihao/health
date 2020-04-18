@@ -1,7 +1,11 @@
 package com.itheima.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.itheima.constant.MessageConstant;
 import com.itheima.dao.MenuDao;
+import com.itheima.entity.PageResult;
 import com.itheima.pojo.Menu;
 import com.itheima.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +69,77 @@ public class MenuServiceImpl implements MenuService {
         }
         //只需返回父菜单集合,子菜单在对应的父菜单中
         return parentList;
+    }
+
+
+    /**
+     * 晴天:
+     * 新增菜单
+     * @param menu
+     */
+    @Override
+    public void addMenu(Menu menu) {
+        //判断是否输入parentMenuId,有就允许添加,没有久不允许添加
+        Integer parentMenuId = menu.getParentMenuId();
+        int count = menuDao.findcountByparentMenuId(parentMenuId);
+        if (count<=0){
+            throw new RuntimeException(MessageConstant.ADD_MENUS_FALL);
+        }
+        menuDao.addMenu(menu);
+    }
+
+    /**
+     * 晴天:
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    @Override
+    public PageResult getAllMenus(Integer currentPage, Integer pageSize, String queryString) {
+        //调用分页插件
+        PageHelper.startPage(currentPage,pageSize);
+        //
+        Page<Menu> menuPage = menuDao.getAllMenus(queryString);
+        return new PageResult(menuPage.getTotal(),menuPage.getResult());
+    }
+
+    /**
+     * 晴天:
+     * 弹出编辑窗口数据
+     * @param id
+     * @return
+     */
+    @Override
+    public Menu getMenuById(Integer id) {
+
+        return menuDao.getMenuById(id);
+    }
+
+    /**
+     * 晴天:
+     * 编辑菜单
+     * @param menu
+     */
+    @Override
+    public void updateMenuById(Menu menu) {
+        menuDao.updateMenuById(menu);
+    }
+
+    /**
+     * 晴天:
+     * 删除菜单
+     * @param id
+     */
+    @Override
+    public void deleteMenuById(Integer id) {
+        //判断role和menu是否存在关联
+        int count = menuDao.findroleIdcountBymenuId(id);
+        if (count>0){
+            throw new RuntimeException(MessageConstant.DELETE_MENU_ROLE_FALL);
+        }
+
+        menuDao.deleteMenuById(id);
     }
 }

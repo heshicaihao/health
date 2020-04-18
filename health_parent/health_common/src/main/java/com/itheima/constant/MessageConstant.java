@@ -80,5 +80,15 @@ public class MessageConstant {
     public static final String DELETE_PERMISSION_SUCCESS = "删除成功";
     public static final String EDIT_PERMISSION_FAIL = "编辑权限失败";
     public static final String EDIT_PERMISSION_SUCCESS = "编辑权限成功";
+    public static final String ADD_MENU_FAIL = "新增菜单失败";
+    public static final String ADD_MENU_SUCCESS = "新增菜单失败";
+    public static final String ADD_MENUS_FALL = "一级菜单不存在,不允许添加";
+    public static final String CHECK_MENU_SUCCESS = "查询菜单成功";
+    public static final String CHECK_MENU_FALL = "查询菜单失败";
+    public static final String UPDATE_MENU_SUCCESS = "编辑菜单成功";
+    public static final String UPDATE_MENU_FALL = "编辑菜单失败";
+    public static final String DELETE_MENU_SUCCESS = "删除菜单成功";
+    public static final String DELETE_MENU_FALL = "删除菜单失败";
+    public static final String DELETE_MENU_ROLE_FALL = "该菜单存在关联表,不能被删除";
 
 }
