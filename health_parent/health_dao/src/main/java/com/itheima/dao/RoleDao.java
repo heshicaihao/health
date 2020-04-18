@@ -1,5 +1,6 @@
 package com.itheima.dao;
 
+import com.github.pagehelper.Page;
 import com.itheima.pojo.Role;
 
 import java.util.Set;
@@ -12,4 +13,12 @@ import java.util.Set;
 public interface RoleDao {
 
     Set<Role> findRolesByUserId(Integer userId);
+
+    /**
+     * 晴天:
+     * 分页查询
+     * @param queryString
+     * @return
+     */
+    Page<Role> getAllRoles(String queryString);
 }

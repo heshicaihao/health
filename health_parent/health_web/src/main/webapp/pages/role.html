@@ -317,14 +317,15 @@
                     };
                     // 分页查询检查组
                     axios.post("/role/getAllRoles.do",params).then(res=>{
-                        this.$notify({
+                        /*this.$notify({
                             message: res.data.message,
                             type: res.data.flag ? 'success' : "error"
-                        });
-                        if (res.data.flag) {
-                            this.dataList = res.data.data.rows;
-                            this.pagination.total = res.data.data.total;
-                        }
+                        });*/
+                        this.dataList = res.data.rows;
+                        this.pagination.total = res.data.total;
+                       /* if (res.data.flag) {
+
+                        }*/
 
                     });
                 },

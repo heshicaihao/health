@@ -12,4 +12,13 @@
     <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
         select  tr.*  from t_role tr,t_user_role tur where tr.id = tur.role_id and tur.user_id = #{userId}
     </select>
+
+
+    <!--分页查询-->
+    <select id="getAllRoles" parameterType="string" resultType="com.itheima.pojo.Role">
+        select*from t_role
+        <if test="value != null and value.length>0">
+            where name like '%${value}%' OR keyword like '%${value}%'
+        </if>
+    </select>
 </mapper>
