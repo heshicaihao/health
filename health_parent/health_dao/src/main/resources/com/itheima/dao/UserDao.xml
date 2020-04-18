@@ -20,7 +20,7 @@
             where  station != 2
         </if>
         <if test="value !=null and value.length >0">
-            where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value} and station != 2
+            where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value}
         </if>
     </select>
 
@@ -40,5 +40,52 @@
         VALUES (#{user_id},#{role_id})
     </insert>
 
+    <!--根据用户名id用户信息-->
+    <select id="findById" parameterType="int" resultMap="userMap">
+        select * from t_user where id = #{id}
+    </select>
+
+    <!--根据用户名id用户信息编辑用户-->
+    <update id="edit" parameterType="com.itheima.pojo.User">
+        update t_user
+        <set>
+            <if test="birthday != null">
+                birthday = #{birthday},
+            </if>
+            <if test="gender !=null and gender.length>0">
+                gender=#{gender},
+            </if>
+            <if test="password !=null and password.length>0">
+                password=#{password},
+            </if>
+            <if test="remark !=null and remark.length>0">
+                remark=#{remark},
+            </if>
+            <if test="station !=null and station.length>0">
+                station=#{station},
+            </if>
+            <if test="telephone !=null  and telephone.length>0 ">
+                telephone=#{telephone},
+            </if>
+            <if test="username !=null and username.length>0">
+                username=#{username},
+            </if>
+
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--先删除用户关联的中间表信息-->
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_user_role where user_id = #{user_id}
+    </delete>
+
+    <!--根据用户手机号码查询数据用户信息-->
+    <select id="findByTelephone" parameterType="string" resultMap="userMap">
+        <if test="telephone !=null and telephone.length>0">
+            username=#{username},
+        </if>
+        select * from t_user where telephone = #{telephone}
+    </select>
 
 </mapper>

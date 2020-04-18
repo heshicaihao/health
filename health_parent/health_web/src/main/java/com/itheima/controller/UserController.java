@@ -3,6 +3,7 @@ package com.itheima.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
 import com.itheima.constant.RedisConstant;
+import com.itheima.constant.RedisMessageConstant;
 import com.itheima.constant.UserStationConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
@@ -12,13 +13,16 @@ import com.itheima.pojo.Setmeal;
 import com.itheima.service.SetmealService;
 import com.itheima.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.JedisPool;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,6 +36,9 @@ public class UserController {
 
     @Reference
     private UserService userService;
+    @Autowired
+    private JedisPool jedisPool;
+
 
     /**
      * 获取当前登录用户的用户名
@@ -92,10 +99,87 @@ public class UserController {
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userService.add(user, roleIds);
             return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false,e.getMessage() );
+        }catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
         }
     }
+
+    /**
+     * 根据id找 用户信息
+     *
+     * @return
+     */
+    @RequestMapping("/findById")
+    public Result findById(Integer id) {
+        try {
+            com.itheima.pojo.User user = userService.findById(id);
+            return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.QUERY_SETMEAL_FAIL);
+        }
+    }
+
+    /**
+     * 编辑用户
+     */
+    @RequestMapping("/edit")
+    public Result edit(@RequestBody com.itheima.pojo.User user, Integer[] roleIds) {
+        try {
+            userService.edit(user,roleIds);
+            return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.EDIT_SETMEAL_FAIL);
+        }
+    }
+
+    /**
+     * 删除用户 只是标注 停用
+     */
+    @RequestMapping("/deleteById")
+    public Result deleteById(Integer id) {
+        try {
+            userService.deleteById(id);
+            return new Result(true, MessageConstant.DELETE_SETMEAL_SUCCESS);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_SETMEAL_FAIL);
+        }
+    }
+
+    /**
+     * 用户忘记密码 验证手机 重置密码
+     */
+    @RequestMapping("/forgotPassword")
+    public Result forgotPassword(@RequestBody Map map) {
+        try {
+            String verification_code = (String)map.get("verification_code");
+            String telephone = (String)map.get("telephone");
+            String redisCode = jedisPool.getResource().get(telephone + RedisMessageConstant.SENDTYPE_GETPWD);
+            if(verification_code == null || redisCode == null || !verification_code.equals(redisCode)){
+                //redis 跟用户输入的验证码不一致直接返回
+                return new Result(false, MessageConstant.VALIDATECODE_ERROR);
+            }
+            userService.forgotPassword(map);
+            return new Result(true,MessageConstant.LOGIN_SUCCESS);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_SETMEAL_FAIL);
+        }
+
+    }
+
+
 
 }
