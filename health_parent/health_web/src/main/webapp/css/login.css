@@ -43,7 +43,8 @@ html,body {
   width: 520px;
   padding: 35px 35px 15px 35px;
   margin: -200px 0 0 0;
-  background:#c7d3ffab;
+  background:#c5d1ffb0;
+  /*background:#c7d3ffab;*/
 }
 .login-container .tips {
   font-size: 14px;
