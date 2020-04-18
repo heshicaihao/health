@@ -79,19 +79,6 @@ public class RoleController {
         return null;
     }
 
-
-    /**
-     * 根据角色id删除角色
-     */
-    @RequestMapping("/deleteRoleById")
-    public Result deleteRoleById(){
-        return null;
-    }
-
-
-
-
-
     /**
      * 晴天:
      * 删除角色

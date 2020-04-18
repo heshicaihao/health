@@ -38,9 +38,6 @@ public interface RoleService {
     //    根据角色id修改角色:updateRoleById
     void updateRoleById(Integer roleId);
 
-    //    根据角色id删除角色:deleteRoleById
-    void deleteRoleById(Integer roleId);
-
     /**
      * 查询所有角色列表
      */
