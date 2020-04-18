@@ -5,11 +5,7 @@ import com.itheima.constant.MessageConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
-import com.itheima.pojo.CheckGroup;
 import com.itheima.pojo.Role;
-import com.itheima.pojo.User;
-import com.itheima.entity.PageResult;
-import com.itheima.entity.QueryPageBean;
 import com.itheima.service.RoleService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,16 +79,24 @@ public class RoleController {
         return null;
     }
 
-
     /**
-     * 根据角色id删除角色
+     * 晴天:
+     * 删除角色
+     * @param id
+     * @return
      */
     @RequestMapping("/deleteRoleById")
-    public Result deleteRoleById(){
-        return null;
+    public Result deleteRoleById(Integer id){
+
+        try {
+            roleService.deleteRoleById(id);
+            return new Result(true, MessageConstant.DELETE_ROLE_SUCCESS);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false,e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_ROLE_FALL);
+        }
     }
-
-
-
-
 }

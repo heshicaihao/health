@@ -38,9 +38,6 @@ public interface RoleService {
     //    根据角色id修改角色:updateRoleById
     void updateRoleById(Integer roleId);
 
-    //    根据角色id删除角色:deleteRoleById
-    void deleteRoleById(Integer roleId);
-
     /**
      * 查询所有角色列表
      */
@@ -56,4 +53,11 @@ public interface RoleService {
      * @return
      */
     PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
+
+    /**
+     * 晴天:
+     * 删除角色
+     * @param id
+     */
+    void deleteRoleById(Integer id);
 }
