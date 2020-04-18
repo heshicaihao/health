@@ -3,6 +3,8 @@ package com.itheima.service;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.Permission;
 
+import java.util.List;
+
 public interface PermissionsService {
 
     /**
@@ -32,4 +34,15 @@ public interface PermissionsService {
      * 编辑
      */
     void updatePermissionById(Permission permission);
+
+    /**
+     * 查询所有权限
+     *  不分页
+     */
+    List<Permission> getAllPermission();
+
+    /**
+     * 根据roleID查询关联的permissionIds
+     */
+    List<Integer> getPermissionIdsByRoleId(Integer id);
 }

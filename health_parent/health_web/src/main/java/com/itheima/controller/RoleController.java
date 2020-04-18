@@ -10,11 +10,18 @@ import com.itheima.pojo.Role;
 import com.itheima.pojo.User;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
+import com.itheima.entity.Result;
+import com.itheima.pojo.Role;
 import com.itheima.service.RoleService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 角色服务
 import java.util.List;
 import java.util.Set;
 
@@ -75,14 +82,6 @@ public class RoleController {
         return null;
     }
 
-    /**
-     * 根据角色id修改角色
-     */
-    @RequestMapping("/updateRoleById")
-    public Result updateRoleById(){
-        return null;
-    }
-
 
     /**
      * 根据角色id删除角色
@@ -90,6 +89,34 @@ public class RoleController {
     @RequestMapping("/deleteRoleById")
     public Result deleteRoleById(){
         return null;
+    }
+
+    /**
+     * 修改角色信息
+     */
+    @RequestMapping("/updateRoleById")
+    public Result updateRoleById(@RequestBody Map map){
+        try {
+            roleService.updateRoleById(map);
+            return new Result(true,MessageConstant.EDIT_ROLE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_ROLE_FAIL);
+        }
+    }
+
+    /**
+     * 根据id查询角色信息
+     */
+    @RequestMapping("/getRoleById")
+    public Result getRoleById(Integer id){
+        try {
+            Role role = roleService.getRoleById(id);
+            return new Result(true, MessageConstant.GET_ROLE_SUCCESS,role);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_ROLE_FAIL);
+        }
     }
 
 

@@ -52,4 +52,10 @@ public interface MenuService {
      * @param id
      */
     void deleteMenuById(Integer id);
+
+    //查询所有菜单
+    List<Menu> getAllMenus();
+
+    //根据roleId获取关联的menuIds
+    List<Integer> getMenuIdsByRoleId(Integer id);
 }

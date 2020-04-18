@@ -5,7 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Map;
 import java.util.List;
 import java.util.Map;
 
@@ -56,4 +56,10 @@ public interface RoleService {
      * @return
      */
     PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
+
+
+
+
+    //编辑角色信息
+    void updateRoleById(Map map);
 }

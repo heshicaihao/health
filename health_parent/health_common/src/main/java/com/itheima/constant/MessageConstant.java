@@ -62,6 +62,10 @@ public class MessageConstant {
     public static final String GET_USERNAME_FAIL = "获取当前登录用户名称失败";
     public static final String GET_MENU_SUCCESS = "获取当前登录用户菜单成功";
     public static final String GET_MENU_FAIL = "获取当前登录用户菜单失败";
+    public static final String GET_ALLMENU_SUCCESS = "获取所有菜单成功";
+    public static final String GET_ALLMENU_FAIL = "获取所有菜单失败";
+    public static final String GET_ROLEWITHMENU_SUCCESS = "获取角色关联菜单成功";
+    public static final String GET_ROLEWITHMENU_FAIL = "获取角色关联菜单失败";
     public static final String GET_MEMBER_NUMBER_REPORT_SUCCESS = "获取会员统计数据成功";
     public static final String GET_MEMBER_NUMBER_REPORT_FAIL = "获取会员统计数据失败";
     public static final String GET_SETMEAL_COUNT_REPORT_SUCCESS = "获取套餐统计数据成功";
@@ -92,6 +96,13 @@ public class MessageConstant {
     public static final String DELETE_MENU_SUCCESS = "删除菜单成功";
     public static final String DELETE_MENU_FALL = "删除菜单失败";
     public static final String DELETE_MENU_ROLE_FALL = "该菜单存在关联表,不能被删除";
+    public static final String GET_ROLE_SUCCESS = "查询角色信息成功";
+    public static final String GET_ROLE_FAIL = "查询角色信息失败";
+    public static final String EDIT_ROLE_SUCCESS = "编辑角色信息成功";
+    public static final String EDIT_ROLE_FAIL = "编辑角色信息失败";
+    public static final String GET_WITHPERMISSIN_SUCCESS = "查询关联权限成功";
+    public static final String GET_WITHPERMISSIN_FAIL = "查询关联权限失败";
+
 
     public static final String GET_MEMBER_COUNT_REPORT_SUCCESS = "获取会员年龄段统计数据成功";
     public static final String GET_MEMBER_AGE_REPORT_SUCCESS = "获取会员性别比例统计数据成功";

@@ -225,7 +225,7 @@
                                                     </td>
                                                     <td><label :for="c.id">{{c.name}}</label></td>
                                                     <td><label :for="c.id">{{c.description}}</label></td>
-                                                    <td><label :for="c.id">{{c.parentMenu}}</label></td>
+                                                    <td><label :for="c.id">{{c.parentMenuId}}</label></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -255,12 +255,12 @@
                     total:100,
                     queryString:null,
                 },
-                dataList: [{id:1,name:'李四',keyword:'Role_admin'}],//列表数据
+                dataList: [{id:5,name:'李四',keyword:'Role_admin'}],//列表数据
                 formData: {name:'添加'},//表单数据
                 tableData:[{name:'删除权限',description:'描述',keyword:'关键字'}],//新增和编辑表单中对应的权限项列表数据
                 tableData2:[{name:'系统权限',description:'描述',parentMenu:1}],//新增和编辑表单中对应的菜单列表数据
                 permissionIds:[12,11,13],//新增和编辑表单中检查项对应的复选框，基于双向绑定可以进行回显和数据提交
-                menuIds:[1,2,3],//新增和编辑表单中菜单对应的复选框，基于双向绑定可以进行回显和数据提交
+                menuIds:[2,3],//新增和编辑表单中菜单对应的复选框，基于双向绑定可以进行回显和数据提交
                 dialogFormVisible: false,//控制添加窗口显示/隐藏
                 dialogFormVisible4Edit:false//控制编辑窗口显示/隐藏
             },
@@ -273,8 +273,8 @@
                     // 关闭窗口
                     this.dialogFormVisible4Edit = false;
 
-                    this.formData.permissionIds = this.permissionIds;
-                    this.formData.menuIds = this.menuIds;
+                    this.formData.permissions = this.permissionIds;
+                    this.formData.menus = this.menuIds;
                     // 提交对象为role对象与menuids[],permissionIds[]
                     axios.post("/role/updateRoleById.do?", this.formData).then(res=>{
                         this.$notify({
@@ -343,7 +343,7 @@
                 // 获取permissions
                 getPermissions() {
                     // 回显权限项信息
-                    axios.get("/permission/getAllPermissions.do").then(res=>{
+                    axios.get("/permission/getAllPermission.do").then(res=>{
                         this.$notify({
                             message: res.data.message,
                             type: res.data.flag ? 'success' : "error"
@@ -358,7 +358,7 @@
 
                 // 获取menus
                 getMenus() {
-                    // 回显权限项信息
+                    // 回显菜单项信息
                     axios.get("/menu/getAllMenus.do").then(res=>{
                         this.$notify({
                             message: res.data.message,

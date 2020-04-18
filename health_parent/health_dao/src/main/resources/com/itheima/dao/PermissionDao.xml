@@ -52,4 +52,14 @@
         update t_permission set name = #{name},keyword = #{keyword} where id =#{id}
     </update>
 
+    <!--查询所有角色  不分页-->
+    <select id="getAllPermission" resultType="com.itheima.pojo.Permission">
+        select * from t_permission
+    </select>
+
+    <!--根据roleId查询关联的permissionIds-->
+    <select id="getPermissionIdsByRoleId" parameterType="int" resultType="int">
+        select permission_id from t_role_permission where role_id = #{roleId}
+    </select>
+
 </mapper>
