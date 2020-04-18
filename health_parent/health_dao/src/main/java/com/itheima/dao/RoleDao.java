@@ -2,6 +2,7 @@ package com.itheima.dao;
 
 import com.itheima.pojo.Role;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -12,4 +13,16 @@ import java.util.Set;
 public interface RoleDao {
 
     Set<Role> findRolesByUserId(Integer userId);
+
+    void addRoles(Role role);
+    /**
+     *  添加角色和菜单关系表
+     */
+
+    void bindRoleAndMenu(Map<String, Integer> rsMap);
+
+    /**
+     *  添加角色和权限关系表
+     */
+    void bindRoleAndPermission(Map<String, Integer> rsMap);
 }

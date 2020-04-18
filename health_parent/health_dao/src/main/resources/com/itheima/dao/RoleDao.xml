@@ -12,4 +12,21 @@
     <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
         select  tr.*  from t_role tr,t_user_role tur where tr.id = tur.role_id and tur.user_id = #{userId}
     </select>
+
+    <!--添加角色-->
+    <insert id="addRoles" parameterType="Role">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_role (name,keyword,description) values (#{name},#{keyword},#{description})
+    </insert>
+    <!--添加角色和菜单关系表-->
+    <insert id="bindRoleAndMenu" parameterType="map">
+        insert into t_role_menu (role_id,menu_id) values (#{roleId},#{menuId})
+    </insert>
+
+    <!--添加角色和权限关系表-->
+    <insert id="bindRoleAndPermission" parameterType="map">
+        insert into t_role_permission (role_id,permission_id) values (#{roleId},#{permissionId})
+    </insert>
 </mapper>

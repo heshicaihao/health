@@ -6,4 +6,8 @@
         select m.* from t_menu m
         where m.id in (select rm.menu_id from t_role_menu rm where rm.role_id in (select r.id from t_user_role ur, t_role r where ur.role_id = r.id and ur.user_id = #{userId}));
     </select>
+    <!--查询所有菜单-->
+    <select id="getAllMenus" resultType="com.itheima.pojo.Menu">
+    select name, description, parentMenuId parentMenu from t_menu where level = 2
+</select>
 </mapper>
