@@ -296,30 +296,30 @@ public class ReportController {
         Date begin = list.get(0);
         Date end = list.get(1);
         //开始日期日历对象
-        Calendar bef = Calendar.getInstance();
+        Calendar before = Calendar.getInstance();
         //结束日期日历对象
-        Calendar aft = Calendar.getInstance();
-        bef.setTime(begin);
-        aft.setTime(end);
+        Calendar after = Calendar.getInstance();
+        before.setTime(begin);
+        after.setTime(end);
         //获取起始年月
-        int year1 = bef.get(Calendar.YEAR);
-        int month1 = bef.get(Calendar.MONTH);
+        int beforeYear = before.get(Calendar.YEAR);
+        int beforeMonth = before.get(Calendar.MONTH);
 
-        int year2 = aft.get(Calendar.YEAR);
-        int month2 = aft.get(Calendar.MONTH);
+        int afterYear = after.get(Calendar.YEAR);
+        int afterMonth = after.get(Calendar.MONTH);
         //int result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
         int m = 1;//定义月份  默认查询最少为一个月
-
-        if (year1 == year2) {
-            m = month2 - month1 + 1;//月份相同时 也查询一个月
+        //如果选择同一年的 月份相减
+        if (beforeYear == afterYear) {
+            m = afterMonth - beforeMonth + 1;//月份相同时 也查询一个月
         } else {
-            m = 12*(year2 - year1) + month2 - month1 + 1;
+            m = 12*(afterYear - beforeYear) + afterMonth - beforeMonth + 1;
         }
         List<String> listMonth = new ArrayList<String>();
-        aft.add(Calendar.MONTH,-m);//获得当前选择结束日期之前n个月的会员人数
+        after.add(Calendar.MONTH,-m);//获得当前选择结束日期之前n个月的会员人数
         for (int i = 0; i < m; i++) {
-            aft.add(Calendar.MONTH,1);
-            listMonth.add(new SimpleDateFormat("yyyy-MM").format(aft.getTime()));
+            after.add(Calendar.MONTH,1);
+            listMonth.add(new SimpleDateFormat("yyyy-MM").format(after.getTime()));
         }
         Map<String,Object> map = new HashMap();
         map.put("months",listMonth);
@@ -328,4 +328,5 @@ public class ReportController {
         map.put("memberCount",memberCount);
         return new Result(true,MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
     }
+
 }

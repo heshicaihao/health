@@ -17,7 +17,7 @@ public interface MemberDao {
     public Integer findMemberCountBeforeDate(String date);
     public Integer findMemberCountByDate(String date);
     public Integer findMemberCountAfterDate(String date);
-    //public Integer findMemberCountAfterDate(Map weekdate);
+    public Integer findMemberCountAfterDate(Map weekdate);
     public Integer findMemberTotalCount();
 
 //    Integer getMemberCountBetweenDates(String month);

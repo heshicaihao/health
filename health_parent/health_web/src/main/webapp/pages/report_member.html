@@ -52,32 +52,35 @@
         <div id="app">
             <div class="content-header">
                 <h1>统计分析<small>会员数量</small></h1>
-
-
                 <!--日期选择-->
-
-
             </div>
+
             <div class="block" style="margin-left:7em">
                 <!--提示用户的标签-->
                 <el-tag size="medium" type="success">自定义检索时间</el-tag>
-
-                <el-date-picker
+                <!--<el-date-picker
                         v-model="value1"
                         type="daterange"
                         range-separator="至"
                         start-placeholder="开始日期"
                         format="yyyy 年 MM 月 dd 日"
                         unlink-panels="false"
-                        value-format="yyyy-MM-dd">
-                    end-placeholder="结束日期">
+                        value-format="yyyy-MM-dd"
+                        end-placeholder="结束日期">
+                </el-date-picker>-->
+                <el-date-picker
+                        v-model="value1"
+                        type="monthrange"
+                        align="right"
+                        unlink-panels
+                        range-separator="至"
+                        start-placeholder="开始月份"
+                        end-placeholder="结束月份"
+                        :picker-options="pickerOptions">
                 </el-date-picker>
                 <el-button type="primary" size="medium" @click="show()" icon="el-icon-search" plain>搜索</el-button>
-
             </div>
-            <!--<div class="app-container">-->
 
-            <!--</div>-->
             <el-container>
                         <div class="box">
                             <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
@@ -93,29 +96,53 @@
                             <div id="chart3" style="height:500px;"></div>
                         </div>
             </el-container>
-
-
         </div>
     </body>
     <!-- 引入组件库 -->
-    <script src="../js/vue.js"></script>
-    <script src="../plugins/elementui/index.js"></script>
+    <!-- 引入ElementUI样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入ElementUI组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-    <link rel="stylesheet" href="../css/index.css">
+  <!--  <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/index.css">-->
     <!-- 引入组件库 -->
     <script type="text/javascript">
 
         new Vue({
-            el:"#app",
-            data:{
-                value1: '',
-
+            el: "#app",
+            data: {
+                    value1: '',
+                pickerOptions: {
+                    shortcuts: [{
+                        text: '本月',
+                        onClick(picker) {
+                            picker.$emit('pick', [new Date(), new Date()]);
+                        }
+                    }, {
+                        text: '今年至今',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date(new Date().getFullYear(), 0);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }, {
+                        text: '最近六个月',
+                        onClick(picker) {
+                            const end = new Date();
+                            const start = new Date();
+                            start.setMonth(start.getMonth() - 6);
+                            picker.$emit('pick', [start, end]);
+                        }
+                    }]
+                },
             },
 
             methods:{
                 show:function () {
-
                     axios.post("/report/getMemberCountBetweenDates.do",this.value1).then(res=>{
                         this.$notify({
                             message: res.data.message,
