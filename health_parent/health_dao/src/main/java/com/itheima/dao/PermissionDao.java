@@ -73,4 +73,6 @@ public interface PermissionDao {
      * 根据roleId查询关联的permissionIds
      */
     List<Integer> getPermissionIdsByRoleId(Integer id);
+
+
 }

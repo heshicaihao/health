@@ -24,7 +24,7 @@ public interface RoleService {
     List<Integer> getRoleIdsByUserId(Integer userId);
 
     //    新增角色:addRoles
-    void addRoles(Role role);
+//    void addRoles(Role role);
 
     //    绑定权限与角色关系:bindRoleAndPermissions
     void bindRoleAndPermissions(Map map);
@@ -52,7 +52,7 @@ public interface RoleService {
      * @param queryString
      * @return
      */
-    PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
+    PageResult getRoles(Integer currentPage, Integer pageSize, String queryString);
 
     /**
      * 晴天:
@@ -62,4 +62,6 @@ public interface RoleService {
     void deleteRoleById(Integer id);
 
 
+    //    新增角色:addRoles
+    void addRoles(Map map);
 }

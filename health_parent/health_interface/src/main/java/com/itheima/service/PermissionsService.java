@@ -45,4 +45,6 @@ public interface PermissionsService {
      * 根据roleID查询关联的permissionIds
      */
     List<Integer> getPermissionIdsByRoleId(Integer id);
+
+
 }

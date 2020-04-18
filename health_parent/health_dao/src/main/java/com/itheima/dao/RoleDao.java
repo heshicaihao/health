@@ -7,6 +7,7 @@ import com.itheima.pojo.Role;
 import java.util.List;
 import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ public interface RoleDao {
      * @param queryString
      * @return
      */
-    Page<Role> getAllRoles(String queryString);
+    Page<Role> getRoles(String queryString);
 
     /**
      *查找全部角色
@@ -72,4 +73,17 @@ public interface RoleDao {
 
     //更新角色表信息
     void updateById(Map map);
+
+    void addRoles(Role role);
+    /**
+     *  添加角色和菜单关系表
+     */
+
+    void bindRoleAndMenu(Map<String, Integer> rsMap);
+
+    /**
+     *  添加角色和权限关系表
+     */
+    void bindRoleAndPermission(Map<String, Integer> rsMap);
+
 }

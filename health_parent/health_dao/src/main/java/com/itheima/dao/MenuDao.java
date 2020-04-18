@@ -85,4 +85,5 @@ public interface MenuDao {
      * @return
      */
     Integer findParentIdById(Integer childrenMenuId);
+
 }

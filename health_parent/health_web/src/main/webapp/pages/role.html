@@ -272,9 +272,12 @@
                 handleEdit() {
                     // 关闭窗口
                     this.dialogFormVisible4Edit = false;
-
                     this.formData.permissions = this.permissionIds;
                     this.formData.menus = this.menuIds;
+
+                    // lcl :this.formData.permissions = this.permissionIds;
+                    // lcl : this.formData.menus = this.menuIds;
+
                     // 提交对象为role对象与menuids[],permissionIds[]
                     axios.post("/role/updateRoleById.do?", this.formData).then(res=>{
                         this.$notify({
@@ -293,7 +296,7 @@
                     // 提交表表单信息,提交对象为role对象与menuids[],permissionIds[]
                     this.formData.permissionIds = this.permissionIds;
                     this.formData.menuIds = this.menuIds;
-                    axios.post("/role/addRoles.do?p",this.formData)
+                    axios.post("/role/addRoles.do?",this.formData)
                         .then(res=>{
                             this.$notify({
                                 message: res.data.message,
@@ -316,16 +319,17 @@
                         queryString  : this.pagination.queryString
                     };
                     // 分页查询检查组
-                    axios.post("/role/getAllRoles.do",params).then(res=>{
-                        /*this.$notify({
-                            message: res.data.message,
-                            type: res.data.flag ? 'success' : "error"
-                        });*/
-                        this.dataList = res.data.rows;
-                        this.pagination.total = res.data.total;
-                       /* if (res.data.flag) {
-
-                        }*/
+                    axios.post("/role/getRoles.do",params).then(res=>{
+                        // this.$notify({
+                        //     message: res.data.message,
+                        //     type: res.data.flag ? 'success' : "error"
+                        // });
+                        // if (res.data.flag) {
+                            this.dataList = res.data.rows;
+                            // this.dataList = res.data.data.rows;
+                            // this.pagination.total = res.data.data.total;
+                            this.pagination.total = res.data.total;
+                        // }
 
                     });
                 },
@@ -334,9 +338,9 @@
                     // 表单内容清空
                     this.formData = {};
                     // 权限项勾选清空(测试时可以注释,功能OK要取消注释)
-                    // this.permissionIds = [];
+                    this.permissionIds = [];
                     // 菜单项清空
-                    // this.menuIds = [];
+                    this.menuIds = [];
                     // 页面设置为第一页
                     this.activeName ='first'
                 },

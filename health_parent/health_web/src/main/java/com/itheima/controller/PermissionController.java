@@ -34,10 +34,9 @@ public class PermissionController {
             return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
         }
     }
-
     /**
      * 查询所有权限
-     *  不分页
+     * 分页查询
      */
     @RequestMapping("/getAllPermission")
     public Result getAllPermission(){
@@ -49,6 +48,22 @@ public class PermissionController {
             return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
         }
     }
+
+
+//    /**
+//     * 查询所有权限
+//     *  不分页
+//     */
+//    @RequestMapping("/getAllPermission")
+//    public Result getAllPermission(){
+//        try {
+//            List<Permission> permissionList = permissionsService.getAllPermission();
+//            return new Result(true,MessageConstant.GET_PERMISSION_SUCCESS,permissionList);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
+//        }
+//    }
 
     /**
      * 编辑弹窗查询id

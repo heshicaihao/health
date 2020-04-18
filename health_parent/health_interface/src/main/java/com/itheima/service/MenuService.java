@@ -58,4 +58,5 @@ public interface MenuService {
 
     //根据roleId获取关联的menuIds
     List<Integer> getMenuIdsByRoleId(Integer id);
+
 }

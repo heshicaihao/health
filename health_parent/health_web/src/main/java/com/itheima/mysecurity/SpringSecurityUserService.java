@@ -32,7 +32,7 @@ public class SpringSecurityUserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //1.根据用户名查询数据用户信息
         User user = userService.findByUserName(username);
-
+//开一下客户端 有没有印象哪用这个roleDao  是不是没有安装
         //2.判断用户为空
         if(user == null){
             return  null;

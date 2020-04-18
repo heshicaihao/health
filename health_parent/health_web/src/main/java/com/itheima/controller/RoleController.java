@@ -6,18 +6,15 @@ import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
 import com.itheima.pojo.Role;
-import com.itheima.pojo.User;
-import com.itheima.entity.PageResult;
-import com.itheima.entity.QueryPageBean;
-import com.itheima.entity.Result;
-import com.itheima.pojo.Role;
+import com.itheima.service.MenuService;
+import com.itheima.service.PermissionsService;
 import com.itheima.service.RoleService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * 角色服务
@@ -39,6 +36,10 @@ public class RoleController {
 
     @Reference
     private RoleService roleService;
+    @Reference
+    private PermissionsService permissionsService;
+    @Reference
+    private MenuService menuService;
 
     /**
      * 晴天:
@@ -46,14 +47,28 @@ public class RoleController {
      * @param queryPageBean
      * @return
      */
-    @RequestMapping("/getAllRoles")
-    public PageResult getAllRoles(@RequestBody QueryPageBean queryPageBean){
+    @RequestMapping("/getRoles")
+    public PageResult getRoles(@RequestBody QueryPageBean queryPageBean){
         try {
-            PageResult pageResult = roleService.getAllRoles(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
+            PageResult pageResult = roleService.getRoles(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
             return pageResult;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**金旺
+     * 获取所有角色
+     */
+    @RequestMapping("/getAllRoles")
+    public Result getAllRoles(){
+        try {
+            List<Role> roleList = roleService.getAllRoles();
+            return new Result(true,MessageConstant.GET_ALLROLES_SUCCESS,roleList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_ALLROLES_FAIL);
         }
     }
 
@@ -78,8 +93,14 @@ public class RoleController {
      * 新增角色
      */
     @RequestMapping("/addRoles")
-    public Result addRoles(){
-        return null;
+    public Result addRoles(@RequestBody Map map){
+        try {
+            roleService.addRoles(map);
+            return new Result(true,MessageConstant.ADD_ROLES_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.ADD_ROLES_FAIL);
+        }
     }
 
 

@@ -10,6 +10,9 @@ import com.itheima.dao.MenuDao;
 import com.itheima.dao.RoleDao;
 import com.itheima.dao.RoleMenuDao;
 import com.itheima.dao.RolePermissionDao;
+import com.itheima.dao.MenuDao;
+import com.itheima.dao.PermissionDao;
+import com.itheima.dao.RoleDao;
 import com.itheima.pojo.Role;
 import com.itheima.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,13 @@ import java.util.*;
 
 /**
  * 角色服务接口实现类
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @author ljw
+ * @Date: 2020/4/18 15:23
  */
 @Service(interfaceClass = RoleService.class)
 @Transactional
@@ -36,16 +46,21 @@ public class RoleServiceImpl implements RoleService {
      * @return
      */
     @Override
-    public PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString) {
+    public PageResult getRoles(Integer currentPage, Integer pageSize, String queryString) {
         //引用分页插件
         PageHelper.startPage(currentPage,pageSize);
         //分页查询语句
-        Page<Role> rolePage = roleDao.getAllRoles(queryString);
+        Page<Role> rolePage = roleDao.getRoles(queryString);
         return new PageResult(rolePage.getTotal(),rolePage.getResult());
     }
+
+    /**
+     * 查询所有角色
+     * @return
+     */
     @Override
     public List<Role> getAllRoles() {
-        return null;
+        return roleDao.findAll();
     }
 
     @Override
@@ -58,10 +73,6 @@ public class RoleServiceImpl implements RoleService {
         return null;
     }
 
-    @Override
-    public void addRoles(Role role) {
-
-    }
 
     @Override
     public void bindRoleAndPermissions(Map map) {
@@ -190,5 +201,40 @@ public class RoleServiceImpl implements RoleService {
 
         //4.根据role的id删除角色
         roleDao.deleteRoleById(id);
+    }
+
+    /**
+     * 金旺
+     * @param map
+     */
+    @Override
+    public void addRoles(Map map) {
+        //查询所有的permissionIds
+        List<Integer> permissionIds = (List<Integer>) map.get("permissionIds");
+        //获取菜单ids
+        List<Integer> menuIds = (List<Integer>) map.get("menuIds");
+        //添加角色
+        Role role = new Role();
+        role.setName((String) map.get("name"));
+        role.setKeyword((String) map.get("keyword"));
+        role.setDescription((String) map.get("description"));
+        roleDao.addRoles(role);
+
+        Map<String,Integer> rsMap = new HashMap<>();
+        rsMap.put("roleId",role.getId());
+        //保存到对应的权限角色表
+        if (permissionIds != null && permissionIds.size() >0) {
+            for (Integer permissionId : permissionIds) {
+                rsMap.put("permissionId",permissionId);
+                roleDao.bindRoleAndPermission(rsMap);
+            }
+        }
+        //保存到对应的菜单表
+        if (menuIds != null && menuIds.size() > 0) {
+            for (Integer menuId : menuIds) {
+                rsMap.put("menuId",menuId);
+                roleDao.bindRoleAndMenu(rsMap);
+            }
+        }
     }
 }

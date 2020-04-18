@@ -87,7 +87,7 @@ public class MessageConstant {
     public static final String EDIT_PERMISSION_ROLE_SUCCESS = "编辑权限成功";
     public static final String EDIT_PERMISSION_SUCCESS = "编辑权限成功";
     public static final String ADD_MENU_FAIL = "新增菜单失败";
-    public static final String ADD_MENU_SUCCESS = "新增菜单失败";
+    public static final String ADD_MENU_SUCCESS = "新增菜单成功";
     public static final String ADD_MENUS_FALL = "一级菜单不存在,不允许添加";
     public static final String CHECK_MENU_SUCCESS = "查询菜单成功";
     public static final String CHECK_MENU_FALL = "查询菜单失败";
@@ -102,6 +102,10 @@ public class MessageConstant {
     public static final String EDIT_ROLE_FAIL = "编辑角色信息失败";
     public static final String GET_WITHPERMISSIN_SUCCESS = "查询关联权限成功";
     public static final String GET_WITHPERMISSIN_FAIL = "查询关联权限失败";
+    public static final String GET_ALLROLES_SUCCESS = "获取所有菜单成功";
+    public static final String GET_ALLROLES_FAIL = "获取所有菜单失败";
+    public static final String ADD_ROLES_SUCCESS = "添加角色成功";
+    public static final String ADD_ROLES_FAIL = "添加角色失败";
 
 
     public static final String GET_MEMBER_COUNT_REPORT_SUCCESS = "获取会员年龄段统计数据成功";

@@ -15,7 +15,7 @@
 
 
     <!--分页查询-->
-    <select id="getAllRoles" parameterType="string" resultType="com.itheima.pojo.Role">
+    <select id="getRoles" parameterType="string" resultType="com.itheima.pojo.Role">
         select*from t_role
         <if test="value != null and value.length>0">
             where name like '%${value}%' OR keyword like '%${value}%'
@@ -56,4 +56,21 @@
     <update id="updateById" parameterType="map">
         update t_role set name = #{name}, keyword = #{keyword}, description = #{description} where id = #{id}
     </update>
+
+    <!--添加角色-->
+    <insert id="addRoles" parameterType="com.itheima.pojo.Role">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_role (name,keyword,description) values (#{name},#{keyword},#{description})
+    </insert>
+    <!--添加角色和菜单关系表-->
+    <insert id="bindRoleAndMenu" parameterType="map">
+        insert into t_role_menu (role_id,menu_id) values (#{roleId},#{menuId})
+    </insert>
+
+    <!--添加角色和权限关系表-->
+    <insert id="bindRoleAndPermission" parameterType="map">
+        insert into t_role_permission (role_id,permission_id) values (#{roleId},#{permissionId})
+    </insert>
 </mapper>
