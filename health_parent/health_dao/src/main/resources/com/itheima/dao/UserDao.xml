@@ -21,4 +21,21 @@
         </if>
     </select>
 
+    <!--新增用户 -->
+    <insert id="add" parameterType="com.itheima.pojo.User">
+        /*获取检查组id*/
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT  INTO t_user (birthday,gender,password,remark,station,telephone,username)
+        VALUES (#{birthday},#{gender},#{password},#{remark},#{station},#{telephone},#{username})
+    </insert>
+
+    <!--往角色表和用户中间表写记录-->
+    <insert id="setRoleIdAndUser" parameterType="map">
+        INSERT  INTO t_user_role (user_id,role_id)
+        VALUES (#{user_id},#{role_id})
+    </insert>
+
+
 </mapper>

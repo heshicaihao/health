@@ -2,10 +2,12 @@ package com.itheima.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
+import com.itheima.constant.RedisConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
 import com.itheima.pojo.Role;
+import com.itheima.pojo.Setmeal;
 import com.itheima.service.SetmealService;
 import com.itheima.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,6 +74,21 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    /**
+     * 新增用户
+     */
+    @RequestMapping("/add")
+    public Result add(@RequestBody com.itheima.pojo.User user, Integer[] roleIds) {
+        try {
+            userService.add(user, roleIds);
+            return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
         }
     }
 

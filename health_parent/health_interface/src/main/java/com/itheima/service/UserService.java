@@ -22,4 +22,10 @@ public interface UserService {
      */
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
 
+    /**
+     * 新增用户
+     * @param user
+     * @param roleIds
+     */
+    void add(com.itheima.pojo.User user, Integer[] roleIds);
 }

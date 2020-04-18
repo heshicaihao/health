@@ -11,6 +11,9 @@ import com.itheima.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 用户服务接口实现类
  * @author wangxin
@@ -42,6 +45,36 @@ public class UserServiceImpl implements UserService {
         //2.需要分页的语句
         Page<Setmeal> setmealPage = userDao.selectByCondition(queryString);
         return new PageResult(setmealPage.getTotal(), setmealPage.getResult());
+    }
+
+    /**
+     * 新增用户
+     * @param user
+     * @param roleIds
+     */
+    @Override
+    public void add(User user, Integer[] roleIds) {
+        //userDao
+        userDao.add(user);
+        //往角色表和用户中间表写记录(此方法有其它功能用 代码抽取)
+        setRoleIdAndUser(user.getId(), roleIds);
+    }
+
+    /**
+     *往角色表和用户中间表写记录(此方法有其它功能用 代码抽取)
+     * @param user_id
+     * @param roleIds
+     */
+    private void setRoleIdAndUser(Integer user_id, Integer[] roleIds) {
+        if (roleIds != null && roleIds.length > 0) {
+            for (Integer roleId : roleIds) {
+                //为了方便测试传入map对象
+                Map<String, Integer> map = new HashMap<>();
+                map.put("user_id", user_id);
+                map.put("roleId", roleId);
+                userDao.setRoleIdAndUser(map);
+            }
+        }
     }
 
 
