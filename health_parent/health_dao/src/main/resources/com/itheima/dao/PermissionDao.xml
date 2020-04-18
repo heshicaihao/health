@@ -13,7 +13,7 @@
 
     <!--分页查询-->
     <select id="getAllPermissions" parameterType="string" resultType="Permission">
-       select * from t_permission where like  name "%"#{queryString} or like keyword "%"#{queryString}"%"
+       select * from t_permission where name like "%"#{queryString}"%"  or keyword like "%"#{queryString}"%"
     </select>
 
 
