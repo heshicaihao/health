@@ -6,4 +6,20 @@
         select m.* from t_menu m
         where m.id in (select rm.menu_id from t_role_menu rm where rm.role_id in (select r.id from t_user_role ur, t_role r where ur.role_id = r.id and ur.user_id = #{userId}));
     </select>
+
+    <!--查询所有菜单  不分页-->
+    <select id="getAllMenus" resultType="com.itheima.pojo.Menu">
+          select * from t_menu where level = 2
+    </select>
+
+    <!--根据roleId获取关联的menuIds-->
+    <select id="getMenuIdsByRoleId" parameterType="int" resultType="int">
+        select menu_id from t_role_menu where role_id = #{roleId}
+    </select>
+
+    <!--根据子菜单查询父菜单id-->
+    <select id="findParentIdById" parameterType="int" resultType="int">
+        select parentMenuId from t_menu where id = #{childrenMenuId}
+    </select>
+
 </mapper>

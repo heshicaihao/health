@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/permission")
@@ -27,6 +29,21 @@ public class PermissionController {
         try {
             PageResult PageResult = permissionsService.getAllPermissions(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
             return new Result(true,MessageConstant.GET_PERMISSION_SUCCESS,PageResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
+        }
+    }
+
+    /**
+     * 查询所有权限
+     *  不分页
+     */
+    @RequestMapping("/getAllPermission")
+    public Result getAllPermission(){
+        try {
+            List<Permission> permissionList = permissionsService.getAllPermission();
+            return new Result(true,MessageConstant.GET_PERMISSION_SUCCESS,permissionList);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
@@ -73,6 +90,20 @@ public class PermissionController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.DELETE_PERMISSION_FAIL);
+        }
+        }
+
+    /**
+     * 根据RoleId获取相关联的permissionIds
+     */
+    @RequestMapping("/getPermissionIdsByRoleId")
+    public Result getPermissionIdsByRoleId(Integer id){
+        try {
+            List<Integer> permissionIds = permissionsService.getPermissionIdsByRoleId(id);
+            return new Result(true,MessageConstant.GET_WITHPERMISSIN_SUCCESS,permissionIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_WITHPERMISSIN_FAIL);
         }
     }
     /**

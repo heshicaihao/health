@@ -12,4 +12,14 @@
     <select id="findRolesByUserId" parameterType="int" resultMap="roleMap">
         select  tr.*  from t_role tr,t_user_role tur where tr.id = tur.role_id and tur.user_id = #{userId}
     </select>
+
+    <!--根据角色id查询对应角色信息-->
+    <select id="getRoleById" parameterType="int" resultType="com.itheima.pojo.Role">
+        select * from t_role where id = #{id}
+    </select>
+    
+    <!--更新角色信息-->
+    <update id="updateById" parameterType="map">
+        update t_role set name = #{name}, keyword = #{keyword}, description = #{description} where id = #{id}
+    </update>
 </mapper>

@@ -14,4 +14,21 @@ public interface MenuDao {
      * @return
      */
     List<Menu> findMenuListByUserIdAndRoleId(Integer id);
+
+    /**
+     * 查询所有菜单不分页
+     */
+    List<Menu> getAllMenus();
+
+    /**
+     * 根据roleId获取menuIds
+     */
+    List<Integer> getMenuIdsByRoleId(Integer id);
+
+    /**
+     * 查询子菜单对应的父菜单id
+     * @param childrenMenuId
+     * @return
+     */
+    Integer findParentIdById(Integer childrenMenuId);
 }

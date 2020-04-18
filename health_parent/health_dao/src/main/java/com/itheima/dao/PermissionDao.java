@@ -55,4 +55,15 @@ public interface PermissionDao {
      * 删除
      */
     void deletePermissionById(Integer id);
+
+    /**
+     * 查询所有权限
+     * 不分页
+     */
+    List<Permission> getAllPermission();
+
+    /**
+     * 根据roleId查询关联的permissionIds
+     */
+    List<Integer> getPermissionIdsByRoleId(Integer id);
 }

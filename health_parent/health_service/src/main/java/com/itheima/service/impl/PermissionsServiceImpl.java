@@ -74,5 +74,22 @@ public class PermissionsServiceImpl implements PermissionsService {
     public void deletePermissionById(Integer id) {
          permissionDao.deletePermissionById(id);
     }
+
+    /**
+     * 查询所有权限
+     *  不分页
+     */
+    @Override
+    public List<Permission> getAllPermission() {
+        return permissionDao.getAllPermission();
+    }
+
+    /**
+     * 根据roleId查询关联的permissionIds
+     */
+    @Override
+    public List<Integer> getPermissionIdsByRoleId(Integer id) {
+        return permissionDao.getPermissionIdsByRoleId(id);
+    }
 }
 
