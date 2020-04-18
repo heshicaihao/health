@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/permission")
@@ -32,6 +34,21 @@ public class PermissionController {
             return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
         }
     }
+    /**
+     * 查询所有权限
+     * 分页查询
+     */
+    @RequestMapping("/getAllPermission")
+    public Result getAllPermission(){
+        try {
+            List<Permission> permissionList = permissionsService.getAllPermission();
+            return new Result(true,MessageConstant.GET_PERMISSION_SUCCESS,permissionList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.GET_PERMISSION_FAIL);
+        }
+    }
+
 
     /**
      * 编辑弹窗查询id

@@ -41,5 +41,8 @@
     <delete id="deletePermissionById" parameterType="Integer">
         delete from t_permission where id= #{id}
     </delete>
-
+    <!--查询所有权限  不分页-->
+    <select id="getAllPermission" resultType="com.itheima.pojo.Permission">
+    select * from t_permission
+    </select>
 </mapper>

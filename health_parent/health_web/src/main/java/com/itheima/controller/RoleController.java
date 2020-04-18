@@ -42,8 +42,8 @@ public class RoleController {
     @RequestMapping("/getAllRoles")
     public Result getAllRoles(){
         try {
-            roleService.getAllRoles();
-            return new Result(true,MessageConstant.GET_ALLROLES_SUCCESS);
+            List<Role> roleList = roleService.getAllRoles();
+            return new Result(true,MessageConstant.GET_ALLROLES_SUCCESS,roleList);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.GET_ALLROLES_FAIL);

@@ -55,4 +55,6 @@ public interface PermissionDao {
      * 删除
      */
     void deletePermissionById(Integer id);
+
+    List<Permission> getAllPermission();
 }

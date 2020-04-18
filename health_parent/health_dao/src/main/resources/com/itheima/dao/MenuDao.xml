@@ -8,6 +8,6 @@
     </select>
     <!--查询所有菜单-->
     <select id="getAllMenus" resultType="com.itheima.pojo.Menu">
-    select name, description, parentMenuId parentMenu from t_menu where level = 2
+    select * from t_menu where level = 2
 </select>
 </mapper>

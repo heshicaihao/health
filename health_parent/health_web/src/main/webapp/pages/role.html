@@ -341,7 +341,7 @@
                 // 获取permissions
                 getPermissions() {
                     // 回显权限项信息
-                    axios.get("/permission/getAllPermissions.do").then(res=>{
+                    axios.get("/permission/getAllPermission.do").then(res=>{
                         this.$notify({
                             message: res.data.message,
                             type: res.data.flag ? 'success' : "error"

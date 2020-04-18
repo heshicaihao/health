@@ -3,6 +3,8 @@ package com.itheima.service;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.Permission;
 
+import java.util.List;
+
 public interface PermissionsService {
 
     /**
@@ -27,4 +29,6 @@ public interface PermissionsService {
      * 删除
      */
     void deletePermissionById(Integer id);
+
+    List<Permission> getAllPermission();
 }

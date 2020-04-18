@@ -66,15 +66,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void addRoles(Map map) {
         //查询所有的permissionIds
-        Map formDataMap = (Map) map.get("formData");
-        List<Integer> permissionIds = (List<Integer>) formDataMap.get("permissionIds");
+        List<Integer> permissionIds = (List<Integer>) map.get("permissionIds");
         //获取菜单ids
-        List<Integer> menuIds = (List<Integer>) formDataMap.get("menuIds");
+        List<Integer> menuIds = (List<Integer>) map.get("menuIds");
         //添加角色
         Role role = new Role();
-        role.setName((String) formDataMap.get("name"));
-        role.setKeyword((String) formDataMap.get("keyword"));
-        role.setDescription((String) formDataMap.get("description"));
+        role.setName((String) map.get("name"));
+        role.setKeyword((String) map.get("keyword"));
+        role.setDescription((String) map.get("description"));
         roleDao.addRoles(role);
 
         Map<String,Integer> rsMap = new HashMap<>();

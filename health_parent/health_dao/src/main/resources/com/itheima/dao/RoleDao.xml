@@ -14,7 +14,7 @@
     </select>
 
     <!--添加角色-->
-    <insert id="addRoles" parameterType="Role">
+    <insert id="addRoles" parameterType="com.itheima.pojo.Role">
         <selectKey resultType="int" order="AFTER" keyProperty="id">
             select LAST_INSERT_ID()
         </selectKey>

@@ -74,5 +74,12 @@ public class PermissionsServiceImpl implements PermissionsService {
     public void deletePermissionById(Integer id) {
          permissionDao.deletePermissionById(id);
     }
+
+    @Override
+    public List<Permission> getAllPermission() {
+        return permissionDao.getAllPermission();
+    }
+
+
 }
 
