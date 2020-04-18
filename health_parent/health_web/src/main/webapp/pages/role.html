@@ -272,7 +272,6 @@
                 handleEdit() {
                     // 关闭窗口
                     this.dialogFormVisible4Edit = false;
-
                     this.formData.permissionIds = this.permissionIds;
                     this.formData.menuIds = this.menuIds;
                     // 提交对象为role对象与menuids[],permissionIds[]
@@ -293,7 +292,7 @@
                     // 提交表表单信息,提交对象为role对象与menuids[],permissionIds[]
                     this.formData.permissionIds = this.permissionIds;
                     this.formData.menuIds = this.menuIds;
-                    axios.post("/role/addRoles.do?p",this.formData)
+                    axios.post("/role/addRoles.do?",this.formData)
                         .then(res=>{
                             this.$notify({
                                 message: res.data.message,

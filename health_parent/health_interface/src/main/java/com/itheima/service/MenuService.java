@@ -11,4 +11,6 @@ public interface MenuService {
 
     //根据用户id查询用户的菜单列表
     List<Menu> findMenuListByUserIdAndRoleId(Integer id);
+
+    List<Menu> getAllMenus();
 }

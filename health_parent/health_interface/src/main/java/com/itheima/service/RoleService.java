@@ -20,7 +20,7 @@ public interface RoleService {
     List<Integer> getRoleIdsByUserId(Integer userId);
 
     //    新增角色:addRoles
-    void addRoles(Role role);
+//    void addRoles(Role role);
 
     //    绑定权限与角色关系:bindRoleAndPermissions
     void bindRoleAndPermissions(Map map);
@@ -36,5 +36,6 @@ public interface RoleService {
 
     //    根据角色id删除角色:deleteRoleById
     void deleteRoleById(Integer roleId);
-
+    //    新增角色:addRoles
+    void addRoles(Map map);
 }

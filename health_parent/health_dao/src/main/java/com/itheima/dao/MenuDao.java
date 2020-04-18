@@ -14,4 +14,6 @@ public interface MenuDao {
      * @return
      */
     List<Menu> findMenuListByUserIdAndRoleId(Integer id);
+
+    List<Menu> getAllMenus();
 }

@@ -66,4 +66,9 @@ public class MenuServiceImpl implements MenuService {
         //只需返回父菜单集合,子菜单在对应的父菜单中
         return parentList;
     }
+
+    @Override
+    public List<Menu> getAllMenus() {
+        return menuDao.getAllMenus();
+    }
 }
