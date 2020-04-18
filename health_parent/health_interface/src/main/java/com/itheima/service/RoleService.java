@@ -36,7 +36,7 @@ public interface RoleService {
     Role getRoleById(Integer roleId);
 
     //    根据角色id修改角色:updateRoleById
-    void updateRoleById(Integer roleId);
+    void updateRoleById(Map map);
 
     //    根据角色id删除角色:deleteRoleById
     void deleteRoleById(Integer roleId);
@@ -58,8 +58,4 @@ public interface RoleService {
     PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
 
 
-
-
-    //编辑角色信息
-    void updateRoleById(Map map);
 }

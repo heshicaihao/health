@@ -109,16 +109,11 @@ public class RoleServiceImpl implements RoleService {
         return role;
     }
 
-    @Override
-    public void updateRoleById(Integer roleId) {
-
-    }
-
 
     /**
      * 编辑角色信息
      */
-
+    @Override
     public void updateRoleById(Map map) {
         Integer id = (Integer) map.get("id");
         List<Integer> permissions = (List<Integer>) map.get("permissions");

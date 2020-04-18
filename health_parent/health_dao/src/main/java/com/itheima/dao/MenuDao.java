@@ -37,7 +37,7 @@ public interface MenuDao {
      * @param queryString
      * @return
      */
-    Page<Menu> getAllMenus(String queryString);
+    Page<Menu> getMenus(String queryString);
 
     /**
      * 晴天:

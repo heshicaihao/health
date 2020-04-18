@@ -102,11 +102,11 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public PageResult getAllMenus(Integer currentPage, Integer pageSize, String queryString) {
+    public PageResult getMenus(Integer currentPage, Integer pageSize, String queryString) {
         //调用分页插件
         PageHelper.startPage(currentPage,pageSize);
         //
-        Page<Menu> menuPage = menuDao.getAllMenus(queryString);
+        Page<Menu> menuPage = menuDao.getMenus(queryString);
         return new PageResult(menuPage.getTotal(),menuPage.getResult());
     }
 

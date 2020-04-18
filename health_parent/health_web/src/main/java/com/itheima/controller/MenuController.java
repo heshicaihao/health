@@ -59,10 +59,10 @@ public class MenuController {
      * @param queryPageBean
      * @return
      */
-    @RequestMapping("/getAllMenus")
+    @RequestMapping("/getMenus")
     public PageResult getAllMenus(@RequestBody QueryPageBean queryPageBean){
         try {
-            PageResult pageResult = menuService.getAllMenus(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
+            PageResult pageResult = menuService.getMenus(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
             return pageResult;
         } catch (Exception e) {
             e.printStackTrace();

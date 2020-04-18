@@ -29,7 +29,7 @@ public interface MenuService {
      * @param queryString
      * @return
      */
-    PageResult getAllMenus(Integer currentPage, Integer pageSize, String queryString);
+    PageResult getMenus(Integer currentPage, Integer pageSize, String queryString);
 
     /**
      * 晴天:

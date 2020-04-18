@@ -270,7 +270,7 @@
                         pageSize:this.pagination.pageSize ,
                         queryString  : this.pagination.queryString
                     };
-                    axios.post("/menu/getAllMenus.do",params).then(res=>{
+                    axios.post("/menu/getMenus.do",params).then(res=>{
                         /*this.$notify({
                             message: res.data.message,
                             type: res.data.flag ? 'success' : "error"
