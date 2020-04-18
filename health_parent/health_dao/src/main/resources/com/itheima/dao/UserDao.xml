@@ -12,4 +12,33 @@
     <select id="findByUserName" parameterType="string" resultMap="userMap">
         select * from t_user where username = #{username}
     </select>
+
+    <!--用户列表分页-->
+    <select id="selectByCondition" parameterType="string" resultMap="userMap">
+        select * from t_user
+        <if test="true">
+            where  station != 2
+        </if>
+        <if test="value !=null and value.length >0">
+            where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value} and station != 2
+        </if>
+    </select>
+
+    <!--新增用户 -->
+    <insert id="add" parameterType="com.itheima.pojo.User">
+        /*获取检查组id*/
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        INSERT  INTO t_user (birthday,gender,password,remark,station,telephone,username)
+        VALUES (#{birthday},#{gender},#{password},#{remark},#{station},#{telephone},#{username})
+    </insert>
+
+    <!--往角色表和用户中间表写记录-->
+    <insert id="setRoleIdAndUser" parameterType="map">
+        INSERT  INTO t_user_role (user_id,role_id)
+        VALUES (#{user_id},#{role_id})
+    </insert>
+
+
 </mapper>

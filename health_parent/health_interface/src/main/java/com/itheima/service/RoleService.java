@@ -37,4 +37,9 @@ public interface RoleService {
     //    根据角色id删除角色:deleteRoleById
     void deleteRoleById(Integer roleId);
 
+    /**
+     * 查询所有角色列表
+     */
+    List<Role> findAll();
+
 }
