@@ -3,11 +3,13 @@ package com.itheima.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.itheima.constant.UserStationConstant;
 import com.itheima.dao.UserDao;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.Setmeal;
 import com.itheima.pojo.User;
 import com.itheima.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,6 +70,65 @@ public class UserServiceImpl implements UserService {
         userDao.updatePassword(map);
 
     }
+
+
+    @Override
+    public User findById(Integer id) {
+        return userDao.findById(id);
+    }
+
+    @Override
+    public void edit(User user, Integer[] roleIds) {
+        //更新用户表 update 语句
+        userDao.edit(user);
+        //先删除用户关联角色记录 （中间表）
+        userDao.deleteAssociation(user.getId());
+        // 重新建立关联关系（插入中间表）
+        setRoleIdAndUser(user.getId(), roleIds);
+    }
+
+    /**
+     * 删除用户 只是标注 停用
+     * @param id
+     */
+    @Override
+    public void deleteById(Integer id) {
+        //1.根据用户id 查询数据库用户对象
+        User user = userDao.findById(id);
+        //设置用户状态为停用
+        user.setStation(UserStationConstant.STOP_USING);
+
+        //更新用户表 update 语句
+        userDao.edit(user);
+        //先删除用户关联角色记录 （中间表）
+        userDao.deleteAssociation(user.getId());
+    }
+
+    /**
+     *
+     * 忘记密码
+     * @param map
+     */
+    @Override
+    public void forgotPassword(Map map) {
+        String telephone = (String)map.get("telephone");
+        String password = (String)map.get("password");
+        if ("".equals(telephone)){
+            throw new RuntimeException("此用户手机号码不能为空");
+        }else {
+            User user = userDao.findByTelephone(telephone);
+            if(user==null){
+                throw new RuntimeException("此用户没有登记手机号码");
+            }else{
+                //更新用户密码
+                user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+                //更新用户表 update 语句
+                userDao.edit(user);
+            }
+        }
+
+    }
+
 
     /**
      *往角色表和用户中间表写记录(此方法有其它功能用 代码抽取)

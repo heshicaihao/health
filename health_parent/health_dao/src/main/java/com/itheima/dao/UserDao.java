@@ -35,6 +35,36 @@ public interface UserDao {
      * @param user
      */
     void add(User user);
-/*修改用户密码*/
+
+    /*修改用户密码*/
     void updatePassword(Map<String, Object> map);
+
+    /**
+     *  根据id找 用户信息
+     * @param id
+     * @return
+     */
+    User findById(Integer id);
+
+    /**
+     * 编辑用户
+     * @param user
+     */
+    void edit(User user);
+
+
+    /**
+     * 先删除用户关联角色记录 （中间表）
+     * @param id
+     */
+    void deleteAssociation(Integer id);
+
+    /**
+     * 根据手机号码查找 用户
+     * @param telephone
+     * @return
+     */
+    User findByTelephone(String telephone);
+
+
 }
