@@ -1,6 +1,10 @@
 package com.itheima.service;
 
 import com.itheima.pojo.Role;
+import com.alibaba.dubbo.config.annotation.Service;
+import com.itheima.entity.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -42,4 +46,14 @@ public interface RoleService {
      */
     List<Role> findAll();
 
+
+    /**
+     * 晴天:
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param queryString
+     * @return
+     */
+    PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
 }

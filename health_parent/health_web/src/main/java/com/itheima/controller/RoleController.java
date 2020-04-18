@@ -8,6 +8,8 @@ import com.itheima.entity.Result;
 import com.itheima.pojo.CheckGroup;
 import com.itheima.pojo.Role;
 import com.itheima.pojo.User;
+import com.itheima.entity.PageResult;
+import com.itheima.entity.QueryPageBean;
 import com.itheima.service.RoleService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,17 +21,6 @@ import java.util.Set;
 /**
  * 角色模块控制层
  * @author heshicaihao
-import com.itheima.entity.Result;
-import com.itheima.pojo.Menu;
-import com.itheima.service.MenuService;
-import com.itheima.service.RoleService;
-import com.itheima.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-
 /**
  * 用户模块控制层
  * @author wangxin
@@ -42,6 +33,22 @@ public class RoleController {
     @Reference
     private RoleService roleService;
 
+    /**
+     * 晴天:
+     * 分页查询
+     * @param queryPageBean
+     * @return
+     */
+    @RequestMapping("/getAllRoles")
+    public PageResult getAllRoles(@RequestBody QueryPageBean queryPageBean){
+        try {
+            PageResult pageResult = roleService.getAllRoles(queryPageBean.getCurrentPage(),queryPageBean.getPageSize(),queryPageBean.getQueryString());
+            return pageResult;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     /**
      * 查询所有角色列表

@@ -14,13 +14,23 @@
     </select>
 
     <!--用户列表分页-->
+    <!--<select id="selectByCondition" parameterType="string" resultMap="userMap">-->
+        <!--select * from t_user-->
+        <!--<if test="true">-->
+            <!--where  station != 2-->
+        <!--</if>-->
+        <!--<if test="value !=null and value.length >0">-->
+            <!--where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value} and station != 2-->
+        <!--</if>-->
+    <!--</select>-->
+    <!--用户列表分页-->
     <select id="selectByCondition" parameterType="string" resultMap="userMap">
         select * from t_user
         <if test="true">
             where  station != 2
         </if>
         <if test="value !=null and value.length >0">
-            where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value} and station != 2
+            where  username like concat('%',#{value},'%')  or id = #{value} or telephone = #{value}
         </if>
     </select>
 

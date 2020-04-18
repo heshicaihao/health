@@ -12,8 +12,8 @@
     <select id="findcountByparentMenuId" parameterType="int" resultType="int">
         select count(*) from t_menu where parentMenuId = #{parentMenuId}
     </select>
-    <insert id="">
-        insert into t_mennu (name,linkUrl,path,priority,description,icon,parentMenuId,level)
+    <insert id="addMenu" parameterType="com.itheima.pojo.Menu">
+        insert into t_menu (name,linkUrl,path,priority,description,icon,parentMenuId,level)
         values (#{name},#{linkUrl},#{path},#{priority},#{description},#{icon},#{parentMenuId},#{level})
     </insert>
 
