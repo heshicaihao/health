@@ -1,10 +1,6 @@
 package com.itheima.dao;
-
-import com.github.pagehelper.Page;
 import com.itheima.pojo.Permission;
-
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author wangxin

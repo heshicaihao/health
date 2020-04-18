@@ -3,6 +3,8 @@ package com.itheima.service;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.User;
 
+import java.util.Map;
+
 /**
  *
  * 用户服务接口
@@ -28,4 +30,6 @@ public interface UserService {
      * @param roleIds
      */
     void add(com.itheima.pojo.User user, Integer[] roleIds);
+/*修改用户密码*/
+    void updatePassword(Map<String, Object> map);
 }

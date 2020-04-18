@@ -50,5 +50,10 @@
         VALUES (#{user_id},#{role_id})
     </insert>
 
+    <!--修改用户密码-->
+
+    <update id="updatePassword" parameterType="java.util.Map">
+        update t_user set password = #{encodeNewPassword} where username = #{user}
+    </update>
 
 </mapper>

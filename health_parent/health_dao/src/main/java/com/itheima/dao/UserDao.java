@@ -35,5 +35,6 @@ public interface UserDao {
      * @param user
      */
     void add(User user);
-
+/*修改用户密码*/
+    void updatePassword(Map<String, Object> map);
 }

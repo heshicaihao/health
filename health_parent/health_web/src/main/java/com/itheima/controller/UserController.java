@@ -11,16 +11,20 @@ import com.itheima.pojo.Role;
 import com.itheima.pojo.Setmeal;
 import com.itheima.service.SetmealService;
 import com.itheima.service.UserService;
+import com.sun.org.apache.regexp.internal.RE;
 import org.mindrot.jbcrypt.BCrypt;
 import com.itheima.pojo.Menu;
 import com.itheima.service.MenuService;
 import com.itheima.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +46,8 @@ public class UserController {
 
     @Reference
     private MenuService menuService;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     /**
      * 获取当前登录用户的用户名
@@ -117,5 +123,40 @@ public class UserController {
             return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
         }
     }
+
+
+
+    @RequestMapping("/updatePassword")
+    public Result updatePassword(@RequestBody Map<String,Object> map) {
+        String username =(String) map.get("user");
+        String oldPassword = (String)map.get("oldPassword");
+        String newPassword = (String)map.get("NewPassword");
+
+        String encodeNewPassword = encoder.encode(newPassword);//获取新密码密文
+        map.put("encodeNewPassword",encodeNewPassword);
+
+        com.itheima.pojo.User user = userService.findByUserName(username);
+        if(user !=null){
+            boolean flag = encoder.matches(oldPassword, user.getPassword());//验证旧密码是否正确
+            if(flag){
+
+                try {
+                    userService.updatePassword(map);
+                    return new Result(true,MessageConstant.UPDATE_USER_PASSWORD_SUCCESS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return new Result(flag,MessageConstant.UPDATE_USER_PASSWORD_FAIL);
+                }
+            }
+
+
+        }
+
+        return new Result(false,MessageConstant.UPDATE_USER_PASSWORD_FAIL);
+
+
+    }
+
+
 
 }

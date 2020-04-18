@@ -60,6 +60,15 @@ public class UserServiceImpl implements UserService {
         setRoleIdAndUser(user.getId(), roleIds);
     }
 
+    /*修改用户密码*/
+
+    @Override
+    public void updatePassword(Map<String, Object> map) {
+
+        userDao.updatePassword(map);
+
+    }
+
     /**
      *往角色表和用户中间表写记录(此方法有其它功能用 代码抽取)
      * @param user_id
