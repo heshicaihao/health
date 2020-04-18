@@ -27,4 +27,9 @@ public interface PermissionsService {
      * 删除
      */
     void deletePermissionById(Integer id);
+
+    /**
+     * 编辑
+     */
+    void updatePermissionById(Permission permission);
 }

@@ -7,18 +7,18 @@
         select  tp.*  from t_permission tp,t_role_permission trp where tp.id = trp.permission_id and trp.role_id = #{roleId}
     </select>
 
-    <select id="findAll" resultType="com.itheima.pojo.Permission">
+    <select id="findAll" resultType="Permission">
         select * from t_permission
     </select>
 
     <!--分页查询-->
-    <select id="getAllPermissions" parameterType="string" resultType="com.itheima.pojo.Permission">
-       select * from t_permission where name = #{queryString} or keyword = #{queryString}
+    <select id="getAllPermissions" parameterType="string" resultType="Permission">
+       select * from t_permission where like  name "%"#{queryString} or like keyword "%"#{queryString}"%"
     </select>
 
 
     <!--编辑弹窗查询id-->
-    <select id="getPermissionById" parameterType="int" resultType="com.itheima.pojo.Permission">
+    <select id="getPermissionById" parameterType="int" resultType="Permission">
         select * from t_permission where id = #{id}
     </select>
 
@@ -33,7 +33,7 @@
     </select>
 
     <!--添加 -->
-    <insert id="addPermission" parameterType="com.itheima.pojo.Permission">
+    <insert id="addPermission" parameterType="Permission">
         insert  into t_permission (name,keyword,description) values (#{name},#{keyword},#{description})
     </insert>
 
@@ -41,5 +41,15 @@
     <delete id="deletePermissionById" parameterType="Integer">
         delete from t_permission where id= #{id}
     </delete>
+
+    <!--编辑查询关联角色id-->
+    <select id="findPermissionsRoleById" parameterType="int" resultType="int">
+        select count(role_id) from t_role_permission where permission_id = #{id}
+    </select>
+
+    <!--编辑修改-->
+    <update id="updatePermissionById" parameterType="Permission">
+        update t_permission set name= #{name},keyword= #{keyword} where id= #{id}
+    </update>
 
 </mapper>

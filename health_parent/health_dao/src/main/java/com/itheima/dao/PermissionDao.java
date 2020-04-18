@@ -12,9 +12,6 @@ import java.util.Set;
  */
 public interface PermissionDao {
 
-
-    Set<Permission> findPermissionsByRoleId(Integer roleId);
-
     /**
      *
      * 分页查询
@@ -55,4 +52,14 @@ public interface PermissionDao {
      * 删除
      */
     void deletePermissionById(Integer id);
+
+    /**
+     * 编辑查询名称
+     */
+    int findPermissionsRoleById(Integer id);
+
+    /**
+     * 编辑修改
+     */
+    void updatePermissionById(Permission permission);
 }

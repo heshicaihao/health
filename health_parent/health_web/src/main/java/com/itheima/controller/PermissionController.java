@@ -78,12 +78,17 @@ public class PermissionController {
     /**
      * 编辑
      */
-
-
-    /*@RequestMapping("/updatePermissionById")
+    @RequestMapping("/updatePermissionById")
     public Result updatePermissionById(@RequestBody Permission permission){
-     permissionsService.updatePermissionById(permission);
-        return new Result(true,MessageConstant.EDIT_PERMISSION_SUCCESS);
+        try {
+            permissionsService.updatePermissionById(permission);
+            return new Result(true,MessageConstant.EDIT_PERMISSION_ROLE_SUCCESS);
+        } catch (RuntimeException e) {
+            return new Result(false,e.getMessage());
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.EDIT_PERMISSION_FAIL);
+        }
 
-    }*/
+    }
 }
