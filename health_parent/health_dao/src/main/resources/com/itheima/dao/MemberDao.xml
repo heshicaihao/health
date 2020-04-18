@@ -99,4 +99,23 @@
     <select id="getMemberCountBetweenDates" parameterType="String" resultType="int">
         select cout(*) from t_member where regTime = #{value}
     </select>
+
+    <!--会员性别占比-->
+    <select id="findMemberSexCount" resultType="map">
+        select case when sex = 1 then '男性' when  sex = 2 then '女性' else '中性' end name,count(*) value from t_member GROUP BY sex
+    </select>
+
+    <!--会员年龄段占比-->
+    <select id="findMemberFirstAge" resultType="int">
+        select count(*) as value  from t_member where TIMESTAMPDIFF(YEAR,birthday,NOW()) between 10 and 25;
+    </select>
+    <select id="findMemberSecondAge" resultType="int">
+        select count(*) as "人数" from t_member where TIMESTAMPDIFF(YEAR,birthday,NOW()) between 26 and 40;
+    </select>
+    <select id="findMemberThirdAge" resultType="int">
+        select count(*) as "人数" from t_member where TIMESTAMPDIFF(YEAR,birthday,NOW()) between 41 and 70;
+    </select>
+    <select id="findMemberLastAge" resultType="int">
+        select count(*) as "人数" from t_member where TIMESTAMPDIFF(YEAR,birthday,NOW()) > 70;
+    </select>
 </mapper>

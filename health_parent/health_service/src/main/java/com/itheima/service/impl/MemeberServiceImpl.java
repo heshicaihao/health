@@ -42,4 +42,44 @@ public class MemeberServiceImpl implements MemeberService {
         }
         return memberCount;
     }
+
+  /*  @Override
+    public List<Integer> getMemberCountBetweenDates(List<String> listMonth) {
+        //定义list集合存放会员数量
+        List<Integer> memberCount = new ArrayList<>();
+        if (listMonth != null && listMonth.size() > 0) {
+            for (String month : listMonth) {
+                Integer count = memberDao.getMemberCountBetweenDates(month);
+                memberCount.add(count);
+            }
+        }
+        return memberCount;
+    }*/
+    /**
+     * 会员性别占比饼图
+     */
+    @Override
+    public List<Map<String, Object>> findMemberSexCount() {
+        return memberDao.findMemberSexCount();
+    }
+
+    /**
+     * 会员年龄段占比饼图
+     */
+    @Override
+    public List<Integer> findMemberAgeCount() {
+        List<Integer> memberCount = new ArrayList<>();
+
+        int firstCount = memberDao.findMemberFirstAge();
+        int secondCount = memberDao.findMemberSecondAge();
+        int thirdCount = memberDao.findMemberThirdAge();
+        int lastCount = memberDao.findMemberLastAge();
+
+        memberCount.add(firstCount);
+        memberCount.add(secondCount);
+        memberCount.add(thirdCount);
+        memberCount.add(lastCount);
+
+        return memberCount;
+    }
 }

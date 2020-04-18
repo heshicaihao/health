@@ -17,4 +17,13 @@ public interface MemeberService {
     List<Integer> findMemberCountByMonth(List<String> listMonth);
 
 //    List<Integer> getMemberCountBetweenDates(List<String> listMonth);
+    /**
+     * 会员性别占比饼图
+     */
+    List<Map<String, Object>> findMemberSexCount();
+
+    /**
+     * 会员年龄段占比饼图
+     */
+    List<Integer> findMemberAgeCount();
 }
