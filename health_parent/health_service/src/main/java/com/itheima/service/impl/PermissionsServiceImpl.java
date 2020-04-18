@@ -74,5 +74,26 @@ public class PermissionsServiceImpl implements PermissionsService {
     public void deletePermissionById(Integer id) {
          permissionDao.deletePermissionById(id);
     }
+
+    /**
+     * 编辑
+     */
+    @Override
+    public void updatePermissionById(Permission permission) {
+
+         int count=permissionDao.findPermissionsRoleById(permission.getId());
+         if (count>0){
+             throw  new RuntimeException(MessageConstant.EDIT_PERMISSION_ROLE_FAIL);
+         }
+        int count1 = permissionDao.findPermissionByNameCount(permission.getName());
+        if (count1 > 0) {
+            throw new RuntimeException(MessageConstant.EDIT_PERMISSION_ROLE_FAIL);
+        }
+        int count2 = permissionDao.findPermissionByKeywordCount(permission.getKeyword());
+        if (count2 > 0) {
+            throw new RuntimeException(MessageConstant.EDIT_PERMISSION_ROLE_FAIL);
+        }
+        permissionDao.updatePermissionById(permission);
+    }
 }
 
