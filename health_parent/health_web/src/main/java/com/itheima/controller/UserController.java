@@ -3,6 +3,7 @@ package com.itheima.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.itheima.constant.MessageConstant;
 import com.itheima.constant.RedisConstant;
+import com.itheima.constant.UserStationConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
 import com.itheima.entity.Result;
@@ -10,6 +11,7 @@ import com.itheima.pojo.Role;
 import com.itheima.pojo.Setmeal;
 import com.itheima.service.SetmealService;
 import com.itheima.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -84,6 +86,10 @@ public class UserController {
     @RequestMapping("/add")
     public Result add(@RequestBody com.itheima.pojo.User user, Integer[] roleIds) {
         try {
+            //设置初始状态 正常
+            user.setStation(UserStationConstant.NORMAL);
+            //默认密码加密
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userService.add(user, roleIds);
             return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
         } catch (Exception e) {

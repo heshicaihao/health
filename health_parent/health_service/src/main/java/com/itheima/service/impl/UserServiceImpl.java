@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
      */
     private void setRoleIdAndUser(Integer user_id, Integer[] roleIds) {
         if (roleIds != null && roleIds.length > 0) {
-            for (Integer roleId : roleIds) {
+            for (Integer role_id : roleIds) {
                 //为了方便测试传入map对象
                 Map<String, Integer> map = new HashMap<>();
                 map.put("user_id", user_id);
-                map.put("roleId", roleId);
+                map.put("role_id", role_id);
                 userDao.setRoleIdAndUser(map);
             }
         }

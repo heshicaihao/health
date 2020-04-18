@@ -82,7 +82,7 @@
                                             <el-row>
                                                 <el-col :span="12">
                                                     <el-form-item label="适用性别">
-                                                        <el-select v-model="formData.sex">
+                                                        <el-select v-model="formData.gender">
                                                             <el-option label="不限" value="0"></el-option>
                                                             <el-option label="男" value="1"></el-option>
                                                             <el-option label="女" value="2"></el-option>
@@ -188,8 +188,8 @@
                 handleAdd () {
 
                     //1.提交表单前验证
-                    this.$refs["dataAddForm"].validate((valid) => {
-                        if (valid) {
+                    // this.$refs["dataAddForm"].validate((valid) => {
+                    //     if (valid) {
                             //2.关闭弹出
                             this.dialogFormVisible = false;
                             //3..发送新增用户请求
@@ -210,8 +210,8 @@
                                     this.$message.error(res.data.message);
                                 }
                             })
-                        }
-                    });
+                        // }
+                    // });
 
                 },
 

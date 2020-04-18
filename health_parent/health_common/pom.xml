@@ -11,6 +11,13 @@
 
     <artifactId>health_common</artifactId>
     <dependencies>
+        <!--bcrypt 加密 用于新增用户初始化密码加密-->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+
         <!--第一步：-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
