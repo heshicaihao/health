@@ -90,5 +90,9 @@ public class MessageConstant {
     public static final String DELETE_MENU_SUCCESS = "删除菜单成功";
     public static final String DELETE_MENU_FALL = "删除菜单失败";
     public static final String DELETE_MENU_ROLE_FALL = "该菜单存在关联表,不能被删除";
-
+    public static final String DELETE_ROLE_SUCCESS = "删除角色成功";
+    public static final String DELETE_ROLE_FALL = "删除角色成功";
+    public static final String DELETE_ROLE_MENU_FALL = "该角色与菜单存在关联,不能被删除";
+    public static final String DELETE_ROLE_PERMISSION_FALL = "该角色与权限表存在关联,不能被删除";
+    public static final String DELETE_ROLE_USER_FALL = "该角色与用户表存在关联,不能被删除";
 }

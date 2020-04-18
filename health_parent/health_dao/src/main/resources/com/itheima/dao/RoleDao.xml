@@ -21,4 +21,23 @@
             where name like '%${value}%' OR keyword like '%${value}%'
         </if>
     </select>
+
+
+    <!--删除角色-->
+    <!--1.根据role的id查询与menu表是否有关联-->
+    <select id="findmenuIdcountByroleId" parameterType="int" resultType="int">
+        select count(*) from t_role_menu where role_id = #{id}
+    </select>
+    <!--2.根据role的id查询与permission表是否有关联-->
+    <select id="findpermissionIdcountByroleId" parameterType="int" resultType="int">
+        select count(*) from t_role_permission where role_id = #{id}
+    </select>
+    <!--3.根据role的id查询与user表是否有关联-->
+    <select id="finduserIdcountByroleId" parameterType="int" resultType="int">
+        select count(*) from t_user_role where role_id = #{id}
+    </select>
+    <!--4.根据role的id删除角色-->
+    <delete id="deleteRoleById" parameterType="int">
+        delete from t_role where id = #{id}
+    </delete>
 </mapper>
