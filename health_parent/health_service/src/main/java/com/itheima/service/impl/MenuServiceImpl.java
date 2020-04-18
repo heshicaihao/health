@@ -67,6 +67,11 @@ public class MenuServiceImpl implements MenuService {
                 }
             }
         }
+        for (Menu menu : parentList) {
+            if (menu.getChildren() == null || menu.getChildren().size() < 1){
+                parentList.remove(menu);
+            }
+        }
         //只需返回父菜单集合,子菜单在对应的父菜单中
         return parentList;
     }
@@ -97,11 +102,11 @@ public class MenuServiceImpl implements MenuService {
      * @return
      */
     @Override
-    public PageResult getAllMenus(Integer currentPage, Integer pageSize, String queryString) {
+    public PageResult getMenus(Integer currentPage, Integer pageSize, String queryString) {
         //调用分页插件
         PageHelper.startPage(currentPage,pageSize);
         //
-        Page<Menu> menuPage = menuDao.getAllMenus(queryString);
+        Page<Menu> menuPage = menuDao.getMenus(queryString);
         return new PageResult(menuPage.getTotal(),menuPage.getResult());
     }
 
@@ -141,5 +146,21 @@ public class MenuServiceImpl implements MenuService {
         }
 
         menuDao.deleteMenuById(id);
+    }
+
+    /**lcl
+     * 查询所有菜单 不分页lcl
+     */
+    @Override
+    public List<Menu> getAllMenus() {
+        return menuDao.getAllMenus();
+    }
+
+    /**
+     * 根据roleId获取关联menuIds
+     */
+    @Override
+    public List<Integer> getMenuIdsByRoleId(Integer id) {
+        return menuDao.getMenuIdsByRoleId(id);
     }
 }

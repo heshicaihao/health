@@ -5,7 +5,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.itheima.entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Map;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public interface RoleService {
     Role getRoleById(Integer roleId);
 
     //    根据角色id修改角色:updateRoleById
-    void updateRoleById(Integer roleId);
+    void updateRoleById(Map map);
 
     /**
      * 查询所有角色列表
@@ -60,4 +60,6 @@ public interface RoleService {
      * @param id
      */
     void deleteRoleById(Integer id);
+
+
 }

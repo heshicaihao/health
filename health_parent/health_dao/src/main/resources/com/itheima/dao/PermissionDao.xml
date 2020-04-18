@@ -13,7 +13,7 @@
 
     <!--分页查询-->
     <select id="getAllPermissions" parameterType="string" resultType="Permission">
-       select * from t_permission where like  name "%"#{queryString} or like keyword "%"#{queryString}"%"
+       select * from t_permission where name like "%"#{queryString}"%"  or keyword like "%"#{queryString}"%"
     </select>
 
 
@@ -49,7 +49,17 @@
 
     <!--编辑修改-->
     <update id="updatePermissionById" parameterType="Permission">
-        update t_permission set name= #{name},keyword= #{keyword} where id= #{id}
+        update t_permission set name = #{name},keyword = #{keyword} where id =#{id}
     </update>
+
+    <!--查询所有角色  不分页-->
+    <select id="getAllPermission" resultType="com.itheima.pojo.Permission">
+        select * from t_permission
+    </select>
+
+    <!--根据roleId查询关联的permissionIds-->
+    <select id="getPermissionIdsByRoleId" parameterType="int" resultType="int">
+        select permission_id from t_role_permission where role_id = #{roleId}
+    </select>
 
 </mapper>

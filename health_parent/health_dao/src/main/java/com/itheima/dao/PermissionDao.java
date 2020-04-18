@@ -62,4 +62,15 @@ public interface PermissionDao {
      * 编辑修改
      */
     void updatePermissionById(Permission permission);
+
+    /**
+     * 查询所有权限
+     * 不分页
+     */
+    List<Permission> getAllPermission();
+
+    /**
+     * 根据roleId查询关联的permissionIds
+     */
+    List<Integer> getPermissionIdsByRoleId(Integer id);
 }

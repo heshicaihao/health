@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<style type="text/css">
+    *{margin: 0;padding: 0;}
+    div{
+        position: relative;}
+    div p1{
+        position: absolute;
+        left: 40%;
+        top: 150px;
+        font-size:48px;
+        color: #FFFFFF;
+        font-family: 微软雅黑;
+    }
+    div p2{
+        position: absolute;
+        left: 32%;
+        top: 220px;
+        font-size:48px;
+        color: #FFFFFF;
+        font-family: 微软雅黑;
+        }
+    div p{
+        position: absolute;
+        left: 85%;
+        top: 3%;
+        font-size:20px;
+    }
+    iframe{
+        position: absolute;
+        left: 86%;
+        top: 8%;
+    }
+
+</style>
+<div>
+    <img width="100%" height="100%" src="../img/index1.jpeg"/>
+    <p1><b><i>欢迎登陆</i></b></p1>
+    <p2><b><i>传智健康后台管理系统</i></b></p2>
+    <p id="dateTime"></p>
+    <!--天气-->
+    <iframe width="200" scrolling="no" height="65" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1">
+    </iframe>
+
+</div>
+<script>
+    Date.prototype.format = function (fmt) {
+        var o = {
+            "y+":this.getFullYear(),//年
+            "M+":this.getMonth()+1,//月
+            "d+":this.getDate(),//日
+            "h+":this.getHours(),//小时
+            "m+":this.getMinutes(),//分钟
+            "s+":this.getSeconds() //秒
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 1000);
+</script>
+
+</body>
+</html>
