@@ -107,7 +107,11 @@ public class MessageConstant {
     public static final String ADD_ROLES_SUCCESS = "添加角色成功";
     public static final String ADD_ROLES_FAIL = "添加角色失败";
 
-
+    public static final String DELETE_ROLE_SUCCESS = "删除角色成功";
+    public static final String DELETE_ROLE_FALL = "删除角色成功";
+    public static final String DELETE_ROLE_MENU_FALL = "该角色与菜单存在关联,不能被删除";
+    public static final String DELETE_ROLE_PERMISSION_FALL = "该角色与权限表存在关联,不能被删除";
+    public static final String DELETE_ROLE_USER_FALL = "该角色与用户表存在关联,不能被删除";
     public static final String GET_MEMBER_COUNT_REPORT_SUCCESS = "获取会员年龄段统计数据成功";
     public static final String GET_MEMBER_AGE_REPORT_SUCCESS = "获取会员性别比例统计数据成功";
     public static final String UPDATE_USER_PASSWORD_SUCCESS = "修改密码成功";
