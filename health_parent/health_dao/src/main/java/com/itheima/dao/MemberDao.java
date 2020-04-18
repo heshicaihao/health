@@ -21,4 +21,16 @@ public interface MemberDao {
     public Integer findMemberTotalCount();
 
 //    Integer getMemberCountBetweenDates(String month);
+    /**
+     * 会员性别占比饼图
+     */
+    List<Map<String, Object>> findMemberSexCount();
+
+    /**
+     * 会员年龄段占比饼图
+     */
+    public Integer findMemberFirstAge();
+    public Integer findMemberSecondAge();
+    public Integer findMemberThirdAge();
+    public Integer findMemberLastAge();
 }

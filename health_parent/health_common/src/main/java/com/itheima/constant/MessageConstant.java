@@ -81,4 +81,6 @@ public class MessageConstant {
     public static final String EDIT_PERMISSION_FAIL = "编辑权限失败";
     public static final String EDIT_PERMISSION_SUCCESS = "编辑权限成功";
 
+    public static final String GET_MEMBER_COUNT_REPORT_SUCCESS = "获取会员年龄段统计数据成功";
+    public static final String GET_MEMBER_AGE_REPORT_SUCCESS = "获取会员性别比例统计数据成功";
 }

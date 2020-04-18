@@ -188,8 +188,50 @@
                     // data: [820, 932, 901, 934, 1290, 1330, 1320],
                     data: res.data.data.memberCount
                 }]
-            }),
+            })
 
+        });
+        // 用户年龄分布的数据请求
+        axios.get("/report/getMemberAgeReport.do").then((res)=>{
+            // 对应 chart2
+            // 用户年龄分布
+            myChart3.setOption({
+                    title: {
+                        text: '用户年龄分布',
+                        subtext: '',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: res.data.data.memberAge
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: res.data.data.list,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
+        });
+
+        // 用户性别分布的数据请求
+        axios.get("/report/getMemberSexReport.do").then((res)=>{
+            // 对应 chart3
             // 用户性性别分布
             myChart2.setOption(
                 {
@@ -211,7 +253,7 @@
                     legend: {
                         orient: 'vertical',
                         left: 10,
-                        data: ['男性', '女性', '中性']
+                        data: res.data.data.memberSex
                     },
                     series: [
                         {
@@ -233,69 +275,10 @@
                             labelLine: {
                                 show: false
                             },
-                            data: [
-                                {value: 335, name: '男性'},
-                                {value: 310, name: '女性'},
-                                {value: 234, name: '中性'},
-
-                            ]
+                            data: res.data.data.memberCount
                         }
                     ]
                 });
-
-            // 用户年龄分布
-            myChart3.setOption(
-                {
-                    title: {
-                        text: '用户年龄分布',
-                        subtext: '',
-                        left: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{a} <br/>{b} : {c} ({d}%)'
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        left: 'left',
-                        data: ['0-8','9-18', '19-30', '31-50', '51-70', '71-100','>100']
-                    },
-                    series: [
-                        {
-                            name: '访问来源',
-                            type: 'pie',
-                            radius: '55%',
-                            center: ['50%', '60%'],
-                            data: [
-                                {value: 12, name: '0-8'},
-                                {value: 32, name: '9-18'},
-                                {value: 12, name: '19-30'},
-                                {value: 34, name: '31-50'},
-                                {value: 12, name: '51-70'},
-                                {value: 3, name: '71-100'},
-                                {value: 1, name: '>100'}
-                            ],
-                            emphasis: {
-                                itemStyle: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                });
-        });
-        // 用户年龄分布的数据请求
-        axios.get("/report/getMemberAgeReport.do").then((res)=>{
-            // 对应 chart2
-
-        });
-
-        // 用户性别分布的数据请求
-        axios.get("/report/getMemberSexReport.do").then((res)=>{
-            // 对应 chart3
-
         });
 
 

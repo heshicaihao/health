@@ -328,4 +328,79 @@ public class ReportController {
         map.put("memberCount",memberCount);
         return new Result(true,MessageConstant.GET_MEMBER_NUMBER_REPORT_SUCCESS,map);
     }
+
+    /**
+     * 会员性别占比饼图
+     */
+    @RequestMapping("/getMemberSexReport")
+    public Result getMemberSexReport() {
+        //会员性别：memberSex    会员性别及相对的数量：memberCount
+        //定义返回结果的map
+        Map<String, Object> map = new HashMap<>();
+
+        //map:value：会员数量    name：会员性别
+        List<Map<String,Object>> memberCount = memeberService.findMemberSexCount();
+
+        //定义一个List<String>存放会员性别
+        List<String> memberSex = new ArrayList<>();
+
+        if (memberCount != null && memberCount.size() > 0) {
+            //遍历
+            for (Map<String, Object> countMap : memberCount) {
+                String name = (String) countMap.get("name");
+                memberSex.add(name);
+            }
+        }
+        map.put("memberSex",memberSex);
+        map.put("memberCount",memberCount);
+
+        return new Result(true,MessageConstant.GET_MEMBER_COUNT_REPORT_SUCCESS,map);
+    }
+
+    /**
+     * 会员年龄段占比饼图
+     */
+    @RequestMapping("/getMemberAgeReport")
+    public Result getMemberAgeReport() {
+        //会员年龄段：memberAge    会员年龄段及相对的数量：memberCount
+        //定义返回结果的map
+        Map<String,Object> map = new HashMap<>();
+
+        List<Map> list = new ArrayList<>();
+
+        //map:value：会员数量    name：会员年龄段
+        List<Integer> memberCount = memeberService.findMemberAgeCount();
+
+        List memberAge = new ArrayList();
+        memberAge.add("10-25岁");
+        memberAge.add("26-40岁");
+        memberAge.add("41-70岁");
+        memberAge.add("> 70岁");
+
+        Map<String,Object> map0 = new HashMap<>();
+        map0.put("name",memberAge.get(0));
+        map0.put("value",memberCount.get(0));
+
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("name",memberAge.get(1));
+        map1.put("value",memberCount.get(1));
+
+        Map<String,Object> map2 = new HashMap<>();
+        map2.put("name",memberAge.get(2));
+        map2.put("value",memberCount.get(2));
+
+        Map<String,Object> map3 = new HashMap<>();
+        map3.put("name",memberAge.get(3));
+        map3.put("value",memberCount.get(3));
+
+        list.add(map0);
+        list.add(map1);
+        list.add(map2);
+        list.add(map3);
+
+        map.put("memberAge",memberAge);
+        map.put("list",list);
+
+        return new Result(true,MessageConstant.GET_MEMBER_AGE_REPORT_SUCCESS,map);
+    }
 }
