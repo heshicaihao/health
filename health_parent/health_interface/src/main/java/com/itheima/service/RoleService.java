@@ -56,4 +56,11 @@ public interface RoleService {
      * @return
      */
     PageResult getAllRoles(Integer currentPage, Integer pageSize, String queryString);
+
+    /**
+     * 晴天:
+     * 删除角色
+     * @param id
+     */
+    void deleteRoleById(Integer id);
 }

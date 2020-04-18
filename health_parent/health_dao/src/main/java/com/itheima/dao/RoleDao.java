@@ -28,4 +28,39 @@ public interface RoleDao {
      */
     List<Role> findAll();
 
+
+    /**
+     * 晴天:
+     * 删除角色
+     * 1.根据role的id查询与menu表是否有关联
+     * @param id
+     * @return
+     */
+    int findmenuIdcountByroleId(Integer id);
+
+    /**
+     * 晴天:
+     * 删除角色
+     * 2.根据role的id查询与permission表是否有关联
+     * @param id
+     * @return
+     */
+    int findpermissionIdcountByroleId(Integer id);
+
+    /**
+     * 晴天:
+     * 删除角色
+     * 3.根据role的id查询与user表是否有关联
+     * @param id
+     * @return
+     */
+    int finduserIdcountByroleId(Integer id);
+
+    /**
+     * 晴天:
+     * 删除角色
+     * 4.根据role的id删除角色
+     * @param id
+     */
+    void deleteRoleById(Integer id);
 }
