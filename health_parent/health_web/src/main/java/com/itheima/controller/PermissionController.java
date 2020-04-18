@@ -83,9 +83,7 @@ public class PermissionController {
         try {
             permissionsService.updatePermissionById(permission);
             return new Result(true,MessageConstant.EDIT_PERMISSION_ROLE_SUCCESS);
-        } catch (RuntimeException e) {
-            return new Result(false,e.getMessage());
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,MessageConstant.EDIT_PERMISSION_FAIL);
         }

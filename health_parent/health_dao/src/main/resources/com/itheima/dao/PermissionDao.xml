@@ -49,7 +49,7 @@
 
     <!--编辑修改-->
     <update id="updatePermissionById" parameterType="Permission">
-        update t_permission set name= #{name},keyword= # {keyword} where id= # {id}
+        update t_permission set name = #{name},keyword = #{keyword} where id =#{id}
     </update>
 
 </mapper>
