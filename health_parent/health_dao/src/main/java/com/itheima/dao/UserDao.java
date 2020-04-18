@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.itheima.pojo.Setmeal;
 import com.itheima.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,7 +38,7 @@ public interface UserDao {
     void add(User user);
 
     /*修改用户密码*/
-    void updatePassword(Map<String, Object> map);
+    void updatePassword(Map map);
 
     /**
      *  根据id找 用户信息
@@ -64,7 +65,12 @@ public interface UserDao {
      * @param telephone
      * @return
      */
-    User findByTelephone(String telephone);
+    List<User> findByTelephone(String telephone);
 
 
+    /**
+     * 手机修改用户密码
+     * @param user
+     */
+    void changePassword(User user);
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -111,19 +112,25 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void forgotPassword(Map map) {
+        String username = (String)map.get("username");
         String telephone = (String)map.get("telephone");
         String password = (String)map.get("password");
         if ("".equals(telephone)){
             throw new RuntimeException("此用户手机号码不能为空");
         }else {
-            User user = userDao.findByTelephone(telephone);
-            if(user==null){
+            // 一个手机号注册多个可能
+            List<User> userList = userDao.findByTelephone(telephone);
+            if(userList==null|| userList.size() < 0){
                 throw new RuntimeException("此用户没有登记手机号码");
             }else{
                 //更新用户密码
+                User user = new User();
+//                user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+                user.setUsername(username);
+                // 密码加密
                 user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
                 //更新用户表 update 语句
-                userDao.edit(user);
+                userDao.changePassword(user);
             }
         }
 

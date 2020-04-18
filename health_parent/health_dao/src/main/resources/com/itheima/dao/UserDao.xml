@@ -56,6 +56,11 @@
         update t_user set password = #{encodeNewPassword} where username = #{user}
     </update>
 
+    <!--手机修改用户密码-->
+    <update id="changePassword" parameterType="com.itheima.pojo.User">
+        update t_user set password = #{password} where username = #{username}
+    </update>
+
 
     <!--根据用户名id用户信息-->
     <select id="findById" parameterType="int" resultMap="userMap">
@@ -98,10 +103,11 @@
     </delete>
 
     <!--根据用户手机号码查询数据用户信息-->
-    <select id="findByTelephone" parameterType="string" resultMap="userMap">
-        <if test="telephone !=null and telephone.length>0">
-            username=#{username},
-        </if>
+    <!--<select id="findByTelephone" parameterType="string" resultMap="userMap">-->
+    <select id="findByTelephone" parameterType="string" resultType="com.itheima.pojo.User">
+        <!--<if test="telephone !=null and telephone.length>0">-->
+            <!--username=#{username},-->
+        <!--</if>-->
         select * from t_user where telephone = #{telephone}
     </select>
 
