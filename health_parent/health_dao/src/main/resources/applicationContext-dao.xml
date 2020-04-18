@@ -22,14 +22,14 @@
         <property name="username" value="root" />
         <property name="password" value="root" />
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/heima" />
+        <property name="url" value="jdbc:mysql://localhost:3306/itcasthealth" />
     </bean>
     <!--spring和mybatis整合的工厂bean-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="classpath:sqlMapConfig.xml" />
         <!--配置别名-->
-       <!-- <property name="typeAliasesPackage" value="com.itheima.pojo"/>-->
+        <property name="typeAliasesPackage" value="com.itheima.pojo"/>
         <!--配置分页插件-->
     </bean>
     <!--批量扫描接口生成代理对象-->
