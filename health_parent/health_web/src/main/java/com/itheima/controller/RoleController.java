@@ -81,10 +81,10 @@ public class RoleController {
     public Result findAll() {
         try {
             List<Role> roleList = roleService.findAll();
-            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, roleList);
+            return new Result(true, MessageConstant.GET_ROLE_SUCCESS, roleList);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
+            return new Result(false, MessageConstant.GET_ROLE_FAIL);
         }
     }
 
