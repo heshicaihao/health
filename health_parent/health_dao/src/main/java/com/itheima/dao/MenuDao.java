@@ -86,4 +86,10 @@ public interface MenuDao {
      */
     Integer findParentIdById(Integer childrenMenuId);
 
+    /**
+     * 根据id查询menu
+     * @param parentMenuId
+     * @return
+     */
+    Menu findMenuById(Integer parentMenuId);
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -36,44 +37,59 @@ public class MenuServiceImpl implements MenuService {
         //分为父菜单列表与子菜单列表
         List<Menu> childrenList = new ArrayList<>();
         List<Menu> parentList = new ArrayList<>();
+        // 放置父Id
+        HashSet<Integer> parentIdsSet = new HashSet<>();
 
         if (menulist != null && menulist.size() > 0) {
             for (Menu menu : menulist) {
+                // 获取父id
                 Integer parentMenuId = menu.getParentMenuId();
                 //如果父菜单id为空
                 if (parentMenuId == null) {
                     parentList.add(menu);
                 } else {
                     //父菜单id不为空
-                    childrenList.add(menu);
+//                    childrenList.add(menu);放入set中
+                    // 查询父id对应的menu
+                    parentIdsSet.add(parentMenuId);
+//
                 }
             }
-        }
-        //将子菜单放入对应的父菜单的children属性中
-        if (parentList != null && parentList.size() > 0){
-            //得到每一个父菜单对象
-            for (Menu parentMenu : parentList) {
-                if (childrenList != null && childrenList.size() > 0){
-                    List<Menu> list = new ArrayList<>();
-                    //得到每一个子菜单对象
-                    for (Menu childrenMenu : childrenList) {
-                        //将对应的子菜单放入集合
-                        if (childrenMenu.getParentMenuId() == parentMenu.getId()){
-                            list.add(childrenMenu);
-                        }
-                    }
-                    //将子菜单集合放入父菜单对象中
-                    parentMenu.setChildren(list);
-                }
+
+            // 遍历父id
+            for (Integer parentMenuId : parentIdsSet) {
+                // 根据id查询menu
+                Menu parentMenu = menuDao.findMenuById(parentMenuId);
+                menulist.add(parentMenu);
             }
         }
-        for (Menu menu : parentList) {
-            if (menu.getChildren() == null || menu.getChildren().size() < 1){
-                parentList.remove(menu);
-            }
-        }
+
+//
+//        //将子菜单放入对应的父菜单的children属性中
+//        if (parentList != null && parentList.size() > 0){
+//            //得到每一个父菜单对象
+//            for (Menu parentMenu : parentList) {
+//                if (childrenList != null && childrenList.size() > 0){
+//                    List<Menu> list = new ArrayList<>();
+//                    //得到每一个子菜单对象
+//                    for (Menu childrenMenu : childrenList) {
+//                        //将对应的子菜单放入集合
+//                        if (childrenMenu.getParentMenuId() == parentMenu.getId()){
+//                            list.add(childrenMenu);
+//                        }
+//                    }
+//                    //将子菜单集合放入父菜单对象中
+//                    parentMenu.setChildren(list);
+//                }
+//            }
+//        }
+//        for (Menu menu : parentList) {
+//            if (menu.getChildren() == null || menu.getChildren().size() < 1){
+//                parentList.remove(menu);
+//            }
+//        }
         //只需返回父菜单集合,子菜单在对应的父菜单中
-        return parentList;
+        return menulist;
     }
 
 
