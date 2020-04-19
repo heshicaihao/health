@@ -116,4 +116,6 @@ public class MessageConstant {
     public static final String GET_MEMBER_AGE_REPORT_SUCCESS = "获取会员性别比例统计数据成功";
     public static final String UPDATE_USER_PASSWORD_SUCCESS = "修改密码成功";
     public static final String UPDATE_USER_PASSWORD_FAIL = "修改密码失败";
+    public static final String FORGOTPASSWORD_SUCCESS = "找回密码成功";
+    public static final String FORGOTPASSWORD_FAIL = "找回密码失败";
 }
