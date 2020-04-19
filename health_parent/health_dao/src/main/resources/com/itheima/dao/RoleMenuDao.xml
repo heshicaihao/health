@@ -14,4 +14,8 @@
         VALUES (#{roleId},#{menuId})
     </insert>
 
+    <select id="findParentId" parameterType="int" resultType="integer">
+        select parentMenuId from t_menu where id = #{id}
+    </select>
+
 </mapper>
