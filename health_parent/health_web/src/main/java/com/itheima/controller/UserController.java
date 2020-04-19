@@ -124,7 +124,7 @@ public class UserController {
             return new Result(true, MessageConstant.ADD_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.ADD_USER_SUCCESS);
+            return new Result(false, MessageConstant.ADD_USER_FAIL);
         }
     }
 
@@ -169,10 +169,10 @@ public class UserController {
     public Result findById(Integer id) {
         try {
             com.itheima.pojo.User user = userService.findById(id);
-            return new Result(true, MessageConstant.GET_USER_SUCCESS, user);
+            return new Result(true, MessageConstant.GET_PERMISSION_SUCCESS, user);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.GET_USER_FAIL);
+            return new Result(false, MessageConstant.GET_PERMISSION_FAIL);
         }
     }
 
