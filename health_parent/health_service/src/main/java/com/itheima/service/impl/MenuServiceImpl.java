@@ -11,8 +11,7 @@ import com.itheima.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * 菜单服务接口实现类
@@ -37,15 +36,51 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> childrenList = new ArrayList<>();
         List<Menu> parentList = new ArrayList<>();
 
+//        if (menulist != null && menulist.size() > 0) {
+//            for (Menu menu : menulist) {
+//                Integer parentMenuId = menu.getParentMenuId();
+//                //如果父菜单id为空
+//                if (parentMenuId == null) {
+//                    parentList.add(menu);
+//                } else {
+//                    //父菜单id不为空
+//                    childrenList.add(menu);
+//                    // 获取父菜单
+//                    Menu parent = menuDao.getParentMenu(parentMenuId);
+//                    // 遍历parentFu
+//                    for (Menu fuMenu : parentList) {
+//                        // 如果里面不包含父,则添加
+//                        if (fuMenu.getId() == parent.getId()) {
+//                            break;
+//                        }
+//                    }
+//                    // 否则添加父
+//                    parentList.add(parent);
+//
+//
+//                }
+//            }
+//        }
         if (menulist != null && menulist.size() > 0) {
+            Set set = new LinkedHashSet();
             for (Menu menu : menulist) {
                 Integer parentMenuId = menu.getParentMenuId();
                 //如果父菜单id为空
                 if (parentMenuId == null) {
-                    parentList.add(menu);
+                    set.add(menu.getId());
                 } else {
                     //父菜单id不为空
+                    set.add(parentMenuId);
                     childrenList.add(menu);
+                }
+            }
+            Iterator iterator = set.iterator();
+            while (iterator.hasNext()){
+                Integer next = (Integer) iterator.next();
+                if (next != null){
+                    //得到父菜单对象放入父菜单集合
+                    Menu menu = menuDao.getMenuById(next);
+                    parentList.add(menu);
                 }
             }
         }

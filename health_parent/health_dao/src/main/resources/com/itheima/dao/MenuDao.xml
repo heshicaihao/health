@@ -70,4 +70,9 @@
         select parentMenuId from t_menu where id = #{childrenMenuId}
     </select>
 
+    <!--根据子菜单查询父菜单id-->
+    <select id="getParentMenu" parameterType="int" resultType="menu">
+        select * from t_menu where id = #{id}
+    </select>
+
 </mapper>

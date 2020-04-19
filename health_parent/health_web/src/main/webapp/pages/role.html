@@ -275,8 +275,8 @@
                     this.formData.permissionIds = this.permissionIds;
                     this.formData.menuIds = this.menuIds;
 
-                    // lcl :this.formData.permissions = this.permissionIds;
-                    // lcl : this.formData.menus = this.menuIds;
+                    this.formData.permissions = this.permissionIds;
+                    this.formData.menus = this.menuIds;
 
                     // 提交对象为role对象与menuids[],permissionIds[]
                     axios.post("/role/updateRoleById.do?", this.formData).then(res=>{
@@ -294,6 +294,8 @@
                 //添加
                 handleAdd () {
                     // 提交表表单信息,提交对象为role对象与menuids[],permissionIds[]
+                    this.formData.permissions = this.permissionIds;
+                    this.formData.menus = this.menuIds;
                     this.formData.permissionIds = this.permissionIds;
                     this.formData.menuIds = this.menuIds;
                     axios.post("/role/addRoles.do?",this.formData)

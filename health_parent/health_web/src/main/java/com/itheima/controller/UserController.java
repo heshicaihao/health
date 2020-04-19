@@ -121,10 +121,10 @@ public class UserController {
             //默认密码加密
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userService.add(user, roleIds);
-            return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
+            return new Result(true, MessageConstant.ADD_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
+            return new Result(false, MessageConstant.ADD_USER_SUCCESS);
         }
     }
 
@@ -169,10 +169,10 @@ public class UserController {
     public Result findById(Integer id) {
         try {
             com.itheima.pojo.User user = userService.findById(id);
-            return new Result(true, MessageConstant.GET_PERMISSION_SUCCESS, user);
+            return new Result(true, MessageConstant.GET_USER_SUCCESS, user);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.GET_PERMISSION_FAIL);
+            return new Result(false, MessageConstant.GET_USER_FAIL);
         }
     }
 
@@ -183,10 +183,10 @@ public class UserController {
     public Result edit(@RequestBody com.itheima.pojo.User user, Integer[] roleIds) {
         try {
             userService.edit(user,roleIds);
-            return new Result(true, MessageConstant.EDIT_MEMBER_SUCCESS);
+            return new Result(true, MessageConstant.EDIT_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.EDIT_MEMBER_FAIL);
+            return new Result(false, MessageConstant.EDIT_USER_FAIL);
         }
     }
 
@@ -197,13 +197,13 @@ public class UserController {
     public Result deleteById(Integer id) {
         try {
             userService.deleteById(id);
-            return new Result(true, MessageConstant.DELETE_MEMBER_SUCCESS);
+            return new Result(true, MessageConstant.DELETE_USER_SUCCESS);
         } catch (RuntimeException e) {
             e.printStackTrace();
             return new Result(false, e.getMessage());
         }catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.DELETE_MEMBER_FAIL);
+            return new Result(false, MessageConstant.DELETE_USER_FAIL);
         }
     }
 

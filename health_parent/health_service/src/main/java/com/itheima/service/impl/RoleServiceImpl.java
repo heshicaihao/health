@@ -122,8 +122,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void updateRoleById(Map map) {
         Integer id = (Integer) map.get("id");
-        List<Integer> permissions = (List<Integer>) map.get("permissions");
-        List<Integer> menus = (List<Integer>) map.get("menus");
+        List<Integer> permissions = (List<Integer>) map.get("permissionIds");
+        List<Integer> menus = (List<Integer>) map.get("menuIds");
         Map<String,Integer> map1 = new HashMap<>();
         map1.put("roleId",id);
 //
