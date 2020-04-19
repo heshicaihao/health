@@ -86,4 +86,10 @@ public interface RoleDao {
      */
     void bindRoleAndPermission(Map<String, Integer> rsMap);
 
+    /**
+     * 根据userId获取用户role
+     * @param id
+     * @return
+     */
+    List<Integer> getRoleIdsByUserId(Integer id);
 }

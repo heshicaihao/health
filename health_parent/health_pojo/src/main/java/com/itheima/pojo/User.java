@@ -3,6 +3,7 @@ package com.itheima.pojo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,6 +19,16 @@ public class User implements Serializable{
     private String station; // 状态
     private String telephone; // 联系电话
     private Set<Role> roles = new HashSet<Role>(0);//对应角色集合
+    private List<Integer> roleIds;
+
+    public List<Integer> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<Integer> roleIds) {
+        this.roleIds = roleIds;
+    }
+
     private String roles_list_show = "";//处理多个角色拼接问题
 
     public String getRoles_list_show() {

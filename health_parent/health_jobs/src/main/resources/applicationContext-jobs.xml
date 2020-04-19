@@ -32,6 +32,7 @@
             0 0 2 * * ?  凌晨2点运行任务
             -->
             <value>0 0 2 * * ?</value>
+
         </property>
     </bean>
 
@@ -48,7 +49,9 @@
         <property name="jobDetail" ref="jobDetail2"/>
         <property name="cronExpression">
             <!--每日凌晨两点执行一次任务-->
-            <value>0 0 2 * * ?</value>
+            <!--<value>0 0 2 * * ?</value>-->
+            <!--演示用,每隔5秒-->
+            <value>0/5 * * * * ? </value>
         </property>
     </bean>
 

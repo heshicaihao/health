@@ -362,10 +362,15 @@
                 this.dataList = res.data.rows; //响应的数据
             })
 
+                this.resetForm();
             },
             // 重置表单
             resetForm() {
                 this.formData = {};
+                // 清空勾选
+                this.roleIds=[];
+                // 回归第一页
+                this.activeName='first';
             },
             // 弹出添加窗口
             handleCreate() {
@@ -393,6 +398,8 @@
                     message: res.data.message,
                     type: res.data.flag ? 'success':"error"
                 });
+                    // 缺角色ids
+                this.roleIds=res.data.data.roleIds
                 this.formData = res.data.data;//将后台的数据给页面fromData 数据双向绑定 v-model指定
                 //查询角色列表
                 axios.get('/role/findAll.do').then(res=>{
@@ -401,7 +408,9 @@
                     type: res.data.flag ? 'success':"error"
                 });
                 if(res.data.flag){
+                    // 角色类表
                     this.tableData = res.data.data;
+
                 }
             })
             })

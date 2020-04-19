@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.itheima.constant.UserStationConstant;
+import com.itheima.dao.RoleDao;
 import com.itheima.dao.UserDao;
 import com.itheima.entity.PageResult;
 import com.itheima.pojo.Setmeal;
@@ -28,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private RoleDao roleDao;
 
     /**
      * 根据用户名查询数据用户信息
@@ -75,7 +78,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Integer id) {
-        return userDao.findById(id);
+        // 根据userId获取用户role-ids
+        List<Integer> roleIds = roleDao.getRoleIdsByUserId(id);
+        User user = userDao.findById(id);
+        user.setRoleIds(roleIds);
+        return user;
+
     }
 
     @Override
