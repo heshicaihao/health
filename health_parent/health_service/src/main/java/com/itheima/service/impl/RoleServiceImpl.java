@@ -116,11 +116,71 @@ public class RoleServiceImpl implements RoleService {
         return role;
     }
 
-
     /**
      * 编辑角色信息
      */
     @Override
+    public void updateRoleById(Map map) {
+        Integer id = (Integer) map.get("id");
+        List<Integer> permissions = (List<Integer>) map.get("permissions");
+        List<Integer> menus = (List<Integer>) map.get("menus");
+        Map<String,Integer> map1 = new HashMap<>();
+        map1.put("roleId",id);
+//
+        //更新角色表信息
+        roleDao.updateById(map);
+
+
+        //根据角色id删除 角色菜单表 关联数据
+        roleMenuDao.deleteByRoleId(id);
+
+        if (menus != null && menus.size() > 0) {
+            Set<Integer> set = new LinkedHashSet<>();
+            for (Integer childrenMenuId : menus) {
+                //插入子菜单关联数据,如果是子菜单就添加,父菜单就放入set
+                Integer parentId = roleMenuDao.findParentId(childrenMenuId);
+                if (parentId != null) {
+                    map1.put("menuId", childrenMenuId);
+                    set.add(parentId);
+                    roleMenuDao.add(map1);
+                }/*else {
+                    //将父菜单id放入set集合中
+                    Integer parentMenuId = menuDao.findParentIdById(childrenMenuId);
+                    //set.add(parentMenuId);
+                }*/
+            }
+
+
+            //插入父菜单关联数据
+            Map<String,Integer> map2 = new HashMap<>();
+            map2.put("roleId",id);
+            Iterator<Integer> iterator = set.iterator();
+            while (iterator.hasNext()){
+                Integer parentMenuId = iterator.next();
+                if (parentMenuId != null) {
+                    map2.put("menuId", parentMenuId);
+                    roleMenuDao.add(map2);
+                }
+            }
+        }
+
+
+        //根据角色id删除 角色权限表 关联数据
+        rolePermissionDao.deleteByRoleId(id);
+
+        //向角色权限表插入新的关联数据
+        if (permissions != null && permissions.size() > 0){
+            for (Integer permission : permissions) {
+                map1.put("permissionId",permission);
+                rolePermissionDao.add(map1);
+            }
+        }
+    }
+
+    /**
+     * 编辑角色信息
+     */
+    /*@Override
     public void updateRoleById(Map map) {
         Integer id = (Integer) map.get("id");
         List<Integer> permissions = (List<Integer>) map.get("permissions");
@@ -146,11 +206,11 @@ public class RoleServiceImpl implements RoleService {
                 set.add(parentMenuId);
             }
             //插入父菜单关联数据
-            /*for (Integer parentMenuId : set) {
+            *//*for (Integer parentMenuId : set) {
                 map1.put("menuId",parentMenuId);
                 roleMenuDao.add(map1);
-            }*/
-            /*Map<String,Integer> map2 = new HashMap<>();
+            }*//*
+            *//*Map<String,Integer> map2 = new HashMap<>();
             map2.put("roleId",id);
             Iterator<Integer> iterator = set.iterator();
             while (iterator.hasNext()){
@@ -159,7 +219,7 @@ public class RoleServiceImpl implements RoleService {
                     map2.put("menuId", parentMenuId);
                     roleMenuDao.add(map2);
                 }
-            }*/
+            }*//*
         }
 
 
@@ -174,7 +234,7 @@ public class RoleServiceImpl implements RoleService {
             }
         }
 
-    }
+    }*/
 
     /**
      * 晴天:

@@ -12,4 +12,6 @@ public interface RoleMenuDao {
 
     //添加新的关系数据
     void add(Map map);
+
+    Integer findParentId(Integer childrenMenuId);
 }
