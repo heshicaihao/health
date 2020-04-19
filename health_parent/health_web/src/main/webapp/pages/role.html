@@ -144,7 +144,7 @@
                                                     </td>
                                                     <td><label :for="c.id">{{c.name}}</label></td>
                                                     <td><label :for="c.id">{{c.description}}</label></td>
-                                                    <td><label :for="c.id">{{c.parentMenu}}</label></td>
+                                                    <td><label :for="c.id">{{c.parentMenuId}}</label></td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -272,8 +272,8 @@
                 handleEdit() {
                     // 关闭窗口
                     this.dialogFormVisible4Edit = false;
-                    this.formData.permissions = this.permissionIds;
-                    this.formData.menus = this.menuIds;
+                    this.formData.permissionIds = this.permissionIds;
+                    this.formData.menuIds = this.menuIds;
 
                     // lcl :this.formData.permissions = this.permissionIds;
                     // lcl : this.formData.menus = this.menuIds;
