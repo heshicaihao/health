@@ -121,10 +121,10 @@ public class UserController {
             //默认密码加密
             user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userService.add(user, roleIds);
-            return new Result(true, MessageConstant.ADD_SETMEAL_SUCCESS);
+            return new Result(true, MessageConstant.ADD_USER_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false, MessageConstant.ADD_SETMEAL_FAIL);
+            return new Result(false, MessageConstant.ADD_USER_FAIL);
         }
     }
 

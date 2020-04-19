@@ -118,4 +118,6 @@ public class MessageConstant {
     public static final String UPDATE_USER_PASSWORD_FAIL = "修改密码失败";
     public static final String FORGOTPASSWORD_SUCCESS = "找回密码成功";
     public static final String FORGOTPASSWORD_FAIL = "找回密码失败";
+    public static final String ADD_USER_SUCCESS = "添加用户成功";
+    public static final String ADD_USER_FAIL = "添加用户失败";
 }
