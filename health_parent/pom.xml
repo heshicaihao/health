@@ -42,7 +42,7 @@
         <!--权限安全框架-->
         <spring.security.version>5.0.5.RELEASE</spring.security.version>
         <!--office操作 企业中一般poi 操作 excel-->
-        <poi.version>3.14</poi.version>
+        <poi.version>4.1.2</poi.version>
         <jedis.version>2.9.0</jedis.version>
         <!--定时任务调度的框架 半夜2点运行一个任务-->
         <quartz.version>2.2.1</quartz.version>
