@@ -24,7 +24,7 @@
     <!-- 集中定义依赖版本号 -->
     <properties>
         <junit.version>4.12</junit.version>
-        <spring.version>5.0.5.RELEASE</spring.version>
+        <spring.version>5.2.20.RELEASE</spring.version>
         <!--分页插件 启用中一般项目都用此插件-->
         <pagehelper.version>4.1.4</pagehelper.version>
         <servlet-api.version>2.5</servlet-api.version>
